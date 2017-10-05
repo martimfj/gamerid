@@ -7,11 +7,12 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import Drawer from 'material-ui/Drawer';
 import FontIcon from 'material-ui/FontIcon';
-import logo from './logo.png';
+import logo from './icons/logo.png';
 import auth from './helpers/auth.js'
 import NotesContainer from './NotesContainer'
 
 import Navbar from './Navbar'
+import LeagueOfLegends from './LeagueOfLegends.jsx'
 
 // import 'materialize-css/dist/css/materialize.css'
 
@@ -52,7 +53,8 @@ class Home extends Component {
         return (
             <div>
                 <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
-                <NotesContainer margin={this.state.drawer} filter={this.state.filter}/>
+                {/* <NotesContainer margin={this.state.drawer} filter={this.state.filter}/> */}
+                <LeagueOfLegends />
             </div>
         );
     }

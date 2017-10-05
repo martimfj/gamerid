@@ -193,8 +193,8 @@ class App extends Component {
         : <div className="App">
           <div className="App-header">
             <img src='' className="App-logo" alt="logo" />
-            <h4> Lembraê </h4>
-            <p> Nunca mais fique com essa cara </p>
+            <h4> GamerID </h4>
+            <p> Seu perfil gamer online </p>
           </div>
           
           <p className="App-intro" style={{margin:20}}>

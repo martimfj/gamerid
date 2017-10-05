@@ -4,13 +4,19 @@ import Avatar from 'material-ui/Avatar'
 import Popover from 'material-ui/Popover'
 import Menu from 'material-ui/Menu'
 import MenuItem from 'material-ui/MenuItem'
-import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
-import Drawer from 'material-ui/Drawer';
-import FontIcon from 'material-ui/FontIcon';
+import FlatButton from 'material-ui/FlatButton'
+import Divider from 'material-ui/Divider'
+import Drawer from 'material-ui/Drawer'
+import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
 
-import logo from './logo.png';
+import logo from './icons/logo.png'
+import steam from './icons/steam.png'
+import leagueoflegends from './icons/leagueoflegends.png'
+import battlenet from './icons/battlenet.png'
+import steamdefault from './icons/steamdefaulticon.jpg'
+import leagueoflegendsdefault from './icons/loldefaulticon.png'
+import battlenetdefault from './icons/battlenetdefaulticon.png'
 import auth from './helpers/auth.js'
 
 class Navbar extends Component {
@@ -25,6 +31,7 @@ class Navbar extends Component {
             drawer : null,
             show : false
         }
+        {/* user : auth.getUser(), */}
     }
     
     componentWillMount() {
@@ -33,6 +40,9 @@ class Navbar extends Component {
     }
 
     componentDidMount() {
+        /*this.photoInput.addEventListener('change', (e) => {
+            this.addPicture(e)
+        })*/
     }
     
 
@@ -62,6 +72,39 @@ class Navbar extends Component {
         })
     }
 
+    /*addPicture = (e) => {
+        let file = e.path[0].files[0]
+        if (file) {
+            if (file.size > 2000000) {
+                this.setState({ errorText : "Imagem muito pesada, o tamanho máximo é 2MB" })
+            } else {
+                this.setState({ errorText : "", imageIsLoading : true })
+                store.uploadImage(file,(result) => {
+                    console.log(result)
+                    let newImages = this.state.images
+                    newImages[result.data.id] =
+                        <div key={result.data.id} image={result.data} className='hover-container'>
+                            <img className='note-input-img'  src={result.data.link} />
+                            <div className='hover-overlay' 
+                                style={{width : result.data.width > 350 ? 350 : result.data.width}}
+                            />
+                            <div className='hover-button'>
+                                <IconButton 
+                                    id={result.data.id} 
+                                    onClick={() => {
+                                        this.setState({ images : { ...this.state.images,[result.data.id] : null } })
+                                    }}
+                                >
+                                    <FontIcon className="material-icons" > delete </FontIcon>
+                                </IconButton>
+                            </div>
+                        </div>
+                    this.setState({images : newImages, imageIsLoading : false })
+                })
+            }    
+        }
+    }*/
+
     render() {
         return (
             <div>
@@ -89,29 +132,6 @@ class Navbar extends Component {
                                 <IconButton onClick={this.handleLockPress}>
                                     <FontIcon className="material-icons" > refresh </FontIcon>
                                 </IconButton>
-                                <FlatButton
-                                    onTouchTap={this.handleTouchTap}
-                                    style={{ color: 'white' }}
-                                    hoverColor={ 'rgba(130,130,130,0.5)' }
-                                    label={this.state.user.username}
-                                >
-                                    <Popover
-                                        open={this.state.open}
-                                        anchorEl={this.state.anchorEl}
-                                        anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                                        targetOrigin={{horizontal: 'middle', vertical: 'top'}}
-                                        onRequestClose={this.handleRequestClose}
-                                    >
-                                        <Menu>
-                                            <MenuItem 
-                                                disabled 
-                                                primaryText={ <div style={{fontSize: 14}}>{this.state.user.email}</div> }/>
-                                            <Divider/>
-                                            <MenuItem primaryText="Configurações" />
-                                            <MenuItem primaryText="Sair" onClick={auth.logout}/>
-                                        </Menu>
-                                    </Popover>                            
-                                </FlatButton>
                             </li>
                         </ul>
                     </div>
@@ -130,7 +150,7 @@ class Navbar extends Component {
                     <FlatButton style={{height:'auto',lineHeight:'none'}}
                         onTouchTap={this.handleTouchTap}
                         hoverColor={ 'rgba(130,130,130,0.1)' }>
-                        <Avatar src={this.state.photoURL} className='userImg' />
+                        <Avatar src='http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png' className='userImg' />
                         <Popover
                             open={this.state.open}
                             anchorEl={this.state.anchorEl}
@@ -139,12 +159,6 @@ class Navbar extends Component {
                             onRequestClose={this.handleRequestClose}
                         >
                             <Menu>
-                                <MenuItem
-                                    disabled 
-                                    primaryText={ <div style={{fontSize: 14}}>{this.state.user.email}</div> }
-                                />
-                                
-                                <Divider/>
                                 <MenuItem primaryText="Selecionar Imagem de Perfil" />
                             </Menu>
                         </Popover>                            
@@ -166,24 +180,28 @@ class Navbar extends Component {
                 />
                 <Divider/>
                 <MenuItem style={{marginTop:20}}
-                    leftIcon={<FontIcon className="material-icons">class</FontIcon>}
-                    primaryText='Todas as notas'
-                    onClick={() => { this.props.setFilter('all') }}
+                    leftIcon={<img src={battlenet} />}
+                    primaryText='Battle.net'
+                    onClick={() => { this.props.setFilter('battlenet') }}
                 />
                 <MenuItem style={{marginTop:20}}
-                    leftIcon={<FontIcon className="material-icons">face</FontIcon>}
-                    primaryText='Minhas notas'
-                    onClick={() => { this.props.setFilter('mine') }}
+                    leftIcon={<img src={leagueoflegends} />}
+                    primaryText='League of Legends'
+                    onClick={() => { this.props.setFilter('leagueoflegends') }}
+                />
+                <MenuItem style={{marginTop:20}}
+                    leftIcon={<img src={steam} />}
+                    primaryText='Steam'
+                    onClick={() => { this.props.setFilter('steam') }}
                 />
 
                 {/* final da navbar */}
                 <div className='sidebar-bottom-item'>
                     <Divider/>
-                    <MenuItem leftIcon={<FontIcon className="material-icons" >help</FontIcon>} primaryText="Ajuda &amp; feedback" />
-                    <MenuItem
+                    {/*<MenuItem
                         leftIcon={<FontIcon className="material-icons" >settings</FontIcon>} 
                         primaryText="Configurações"
-                    />
+                    />*/}
                     <MenuItem 
                         leftIcon={<FontIcon className="material-icons" >power_settings_new</FontIcon>} 
                         primaryText="Sair" onClick={auth.logout}

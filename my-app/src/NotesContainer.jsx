@@ -146,6 +146,15 @@ class NotesContainer extends Component {
         }
     }
 
+    /*getSummonerName() {
+        const summonerrequest = null;
+        fetch('https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/coltshot?api_key=RGAPI-e3afb9fd-41f4-49f7-9b04-3aa715d76b4f')
+            .then(summonerrequest => summonerrequest.json())
+            .then(summonerrequest => {
+                this.setState({person : summonerrequest.profileIconId})
+            })
+    }*/
+
     render() {
         const masonryOptions = {
             transitionDuration: 200,
@@ -192,7 +201,7 @@ class NotesContainer extends Component {
                             value={this.state.title}
                             onChange={this.handleTitleChange}
                             className='note-input-title'
-                            hintText='Título'
+                            hintText={this.state.person}
                             underlineStyle={{width:95+'%',border:'none'}}
                             underlineFocusStyle={{width:95+'%',borderColor:'#808080'}}
                             inputStyle={{color:'gray',fontFamily:'Roboto Condensed'}}
