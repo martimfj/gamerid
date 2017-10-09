@@ -9,6 +9,7 @@ import Drawer from 'material-ui/Drawer';
 import FontIcon from 'material-ui/FontIcon';
 import logo from './icons/logo.png';
 import auth from './helpers/auth.js'
+import leagueprofile from './helpers/leagueoflegends.js'
 import NotesContainer from './NotesContainer'
 
 import Navbar from './Navbar'
@@ -34,7 +35,6 @@ class Home extends Component {
     }
 
     componentDidMount() {
-
     }
 
     componentWillUnmount() {

@@ -150,7 +150,7 @@ class Navbar extends Component {
                     <FlatButton style={{height:'auto',lineHeight:'none'}}
                         onTouchTap={this.handleTouchTap}
                         hoverColor={ 'rgba(130,130,130,0.1)' }>
-                        <Avatar src='http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png' className='userImg' />
+                        <Avatar src='http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png' size={70} />
                         <Popover
                             open={this.state.open}
                             anchorEl={this.state.anchorEl}
