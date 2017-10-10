@@ -14,7 +14,8 @@ class Battlenet extends Component {
                 paragonLevel: null,
                 hero: null,
                 heroLevel: null,
-                heroClass: null
+                heroClass: null,
+                heroPortrait: null
             }
         };
         
@@ -45,7 +46,8 @@ class Battlenet extends Component {
             <div className='row centered'>
                 <div className='note-input-wrapper' style={{backgroundColor : '#ffffff' }}>
                     <div>
-                        <img src={this.state.battlenetprofile.battleTag} />
+                        <img src={this.state.battlenetprofile.heroPortrait} />
+                        <p>BattleTag: {this.state.battlenetprofile.battleTag}</p>
                         <p>Hero Name: {this.state.battlenetprofile.hero}</p>
                         <p>Class: {this.state.battlenetprofile.heroClass}</p>
                         <p>Hero Level: {this.state.battlenetprofile.heroLevel}</p>

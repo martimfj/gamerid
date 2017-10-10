@@ -27,7 +27,7 @@ class Home extends Component {
         this.state = {
             user : auth.getUser(),
             drawer : true,
-            filter : 'all'
+            filter : ''
         }
             
     }
@@ -52,15 +52,40 @@ class Home extends Component {
     }
 
     render() {
-        return (
-            <div>
+        if (this.state.filter === 'leagueoflegends') {
+            return (
+                <div>
                 <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
-                {/* <NotesContainer margin={this.state.drawer} filter={this.state.filter}/> */}
                 <LeagueOfLegends />
+                </div>
+            );
+        }
+
+        else if (this.state.filter === 'steam') {
+            return (
+                <div>
+                <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
                 <Steam />
+                </div>
+            );
+        }
+
+        else if (this.state.filter === 'battlenet') {
+            return (
+                <div>
+                <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
                 <Battlenet />
-            </div>
-        );
+                </div>
+            );
+        }
+
+        else if (this.state.filter === '') {
+            return (
+                <div>
+                <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
+                </div>
+            );
+        }
     }
 }
 
