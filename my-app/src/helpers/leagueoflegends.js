@@ -21,19 +21,15 @@ export default window.leagueoflegends = {
     subscribe(callback){
         emitter.addListener('lolprofile_update', callback)
         this.getSummoner()
-        this.getRank()
         // this.getMatchHistory()
     },
 
     setData(){
-        count ++
-        if (count === 2){
-            emitter.emit('lolprofile_update',lolprofile)
-        }
+        emitter.emit('lolprofile_update',lolprofile)
     },
 
     getSummoner() {
-            fetch('https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/'+ lolprofile.summonerName +'?api_key=RGAPI-70b8a1e4-100a-4360-9bb2-9b87abb32846')
+            fetch('https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/'+ lolprofile.summonerName +'?api_key=RGAPI-5ce33f1f-b3fb-44c7-8ba0-f08309b0dffc')
                 .then(lolrequest => lolrequest.json())
                 .then(lolrequest => {
                     lolprofile.summonerName  = lolrequest.name
@@ -41,12 +37,13 @@ export default window.leagueoflegends = {
                     lolprofile.accountId     = lolrequest.accountId
                     lolprofile.summonerLevel = lolrequest.summonerLevel
                     this.setData()
+                    this.getRank()
                 })
                 
         },
 
     getRank() {
-        fetch('https://br1.api.riotgames.com/lol/league/v3/positions/by-summoner/647588?api_key=RGAPI-70b8a1e4-100a-4360-9bb2-9b87abb32846')
+        fetch('https://br1.api.riotgames.com/lol/league/v3/positions/by-summoner/'+ lolprofile.summonerId +'?api_key=RGAPI-5ce33f1f-b3fb-44c7-8ba0-f08309b0dffc')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.tier   = lolrequest[0].tier
@@ -58,7 +55,7 @@ export default window.leagueoflegends = {
     },
 
     // getMatchHistory() {
-    //     fetch('https://br1.api.riotgames.com/lol/match/v3/matchlists/by-account/663093/recent?api_key=RGAPI-70b8a1e4-100a-4360-9bb2-9b87abb32846')
+    //     fetch('https://br1.api.riotgames.com/lol/match/v3/matchlists/by-account/663093/recent?api_key=RGAPI-5ce33f1f-b3fb-44c7-8ba0-f08309b0dffc')
     //     .then(lolrequest => lolrequest.json())
     //     .then(lolrequest => {
     //         lolprofile.matches = lolrequest.matches[0].lane

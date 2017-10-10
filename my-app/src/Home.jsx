@@ -14,6 +14,8 @@ import NotesContainer from './NotesContainer'
 
 import Navbar from './Navbar'
 import LeagueOfLegends from './LeagueOfLegends.jsx'
+import Steam from './Steam.jsx'
+import Battlenet from './Battlenet.jsx'
 
 // import 'materialize-css/dist/css/materialize.css'
 
@@ -55,6 +57,8 @@ class Home extends Component {
                 <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
                 {/* <NotesContainer margin={this.state.drawer} filter={this.state.filter}/> */}
                 <LeagueOfLegends />
+                <Steam />
+                <Battlenet />
             </div>
         );
     }

@@ -10,8 +10,8 @@ const baseUrl = 'http://localhost:8080/'
 
 var user = { 
     id : null ,
-    email : 'filipefborba@gmail.com',
-    username : 'Coltshot',
+    email : null,
+    username : null,
     password : null
 }
 

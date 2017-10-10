@@ -19,8 +19,7 @@ class LeagueOfLegends extends Component {
                 tier: '',
                 rank: '',
                 wins: '',
-                losses: '',
-                matches: ''
+                losses: ''
             }
         };
         
@@ -63,7 +62,6 @@ class LeagueOfLegends extends Component {
                         <p>{this.state.lolprofile.summonerLevel}</p>
                         <p>{this.state.lolprofile.tier} {this.state.lolprofile.rank}</p>
                         <img src={Gold} />
-                        <p>Matches: {this.state.lolprofile.matches}</p>
                         <Pie data={data}/>
                     </div>
 
@@ -71,17 +69,7 @@ class LeagueOfLegends extends Component {
                         { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
                         { _.values(this.state.images).reverse() }
                         <img className='note-input-img' src={this.state.imgSrc}/>
-                    </div>
-                    
-                    <div className='note-input-options'>    
-                        <input id="photoInput" 
-                            type="file" 
-                            ref={(ref) => this.photoInput = ref } 
-                            style={{display:'none'}}
-                        />
-                        
-                    </div>
-                    
+                    </div>                    
                 </div>
             </div>
         </div>
