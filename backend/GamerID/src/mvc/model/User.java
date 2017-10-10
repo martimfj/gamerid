@@ -1,7 +1,6 @@
 package mvc.model;
-import org.springframework.web.multipart.MultipartFile;
 
-public class Usuario {
+public class User {
 	private Integer id;
 	private String username;
 	private String password;
@@ -10,7 +9,6 @@ public class Usuario {
 	private String riot;
 	private String battlenet;
 	private String discord;
-	private MultipartFile avatar;
 	
 	public Integer getId() {
 		return id;
@@ -59,11 +57,5 @@ public class Usuario {
 	}
 	public void setDiscord(String discord) {
 		this.discord = discord;
-	}
-	public MultipartFile getAvatar() {
-		return avatar;
-	}
-	public void setAvatar(MultipartFile avatar) {
-		this.avatar = avatar;
 	}
 }

@@ -7,7 +7,6 @@ create table Users (
     riot        varchar(32), 
     battlenet   varchar(32), 
     discord     varchar(32), 
-    avatar      MEDIUMBLOB,
     
     PRIMARY     KEY(id),
     UNIQUE      KEY(username),
