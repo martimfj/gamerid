@@ -9,7 +9,8 @@ var battlenetprofile = {
                     paragonLevel: null,
                     hero: null,
                     heroLevel: null,
-                    heroClass: null
+                    heroClass: null,
+                    heroPortrait: 'http://media.blizzard.com/d3/icons/portraits/64/demonhunter_male.png'
                 }
 
 export default window.battlenet = {
