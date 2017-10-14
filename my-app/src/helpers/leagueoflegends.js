@@ -5,65 +5,120 @@ emitter.setMaxListeners(20)
 
 var lolprofile = {
                     summonerName: 'coltshot',
-                    accountId: null,
-                    summonerId: null,
-                    summonerLevel: null,
-                    tier: null,
-                    rank: null,
-                    wins: null,
-                    losses: null
-                    // matches: null
-                }
+                    accountId: '',
+                    summonerId: '',
+                    summonerLevel: '',
+                    tier: '',
+                    rank: '',
+                    wins: '',
+                    losses: '',
+                    lastPlayedChampionId: '',
+                    lastPlayedChampion: '',
+                    mastery: {
+                        firstMasteryChampion: {
+                            level: '',
+                            points: '',
+                            championId: '',
+                            championName: ''},
+                        secondMasteryChampion: {
+                            level: '',
+                            points: '',
+                            championId: '',
+                            championName: ''}
+                        }
+                }   
 
-var count = 0
+var counter = 0
 
 export default window.leagueoflegends = {
     subscribe(callback){
         emitter.addListener('lolprofile_update', callback)
         this.getSummoner()
-        // this.getMatchHistory()
     },
 
     setData(){
         emitter.emit('lolprofile_update',lolprofile)
     },
 
-    getSummoner() {
-            fetch('https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/'+ lolprofile.summonerName +'?api_key=RGAPI-5ce33f1f-b3fb-44c7-8ba0-f08309b0dffc')
-                .then(lolrequest => lolrequest.json())
-                .then(lolrequest => {
-                    lolprofile.summonerName  = lolrequest.name
-                    lolprofile.summonerId    = lolrequest.id
-                    lolprofile.accountId     = lolrequest.accountId
-                    lolprofile.summonerLevel = lolrequest.summonerLevel
-                    this.setData()
-                    this.getRank()
-                })
-                
+    getSummoner(summonerName) {
+        fetch('https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/'+ lolprofile.summonerName +'?api_key=RGAPI-636f13eb-3e10-4edd-9cfb-d6dbfeb0a488')
+            .then(lolrequest => lolrequest.json())
+            .then(lolrequest => {
+                lolprofile.summonerName  = lolrequest.name
+                lolprofile.summonerId    = lolrequest.id
+                lolprofile.accountId     = lolrequest.accountId
+                lolprofile.summonerLevel = lolrequest.summonerLevel
+                this.getRank(lolprofile.summonerId)
+                this.getChampionMasteries(lolprofile.summonerId)
+                this.setData()
+            })  
         },
 
-    getRank() {
-        fetch('https://br1.api.riotgames.com/lol/league/v3/positions/by-summoner/'+ lolprofile.summonerId +'?api_key=RGAPI-5ce33f1f-b3fb-44c7-8ba0-f08309b0dffc')
+    getRank(summonerId) {
+        fetch('https://br1.api.riotgames.com/lol/league/v3/positions/by-summoner/'+ summonerId +'?api_key=RGAPI-636f13eb-3e10-4edd-9cfb-d6dbfeb0a488')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.tier   = lolrequest[0].tier
                 lolprofile.rank   = lolrequest[0].rank
                 lolprofile.wins   = lolrequest[0].wins
                 lolprofile.losses = lolrequest[0].losses
+                // this.getLastPlayedChampionId(lolprofile.accountId)
                 this.setData()
             })
     },
 
-    // getMatchHistory() {
-    //     fetch('https://br1.api.riotgames.com/lol/match/v3/matchlists/by-account/663093/recent?api_key=RGAPI-5ce33f1f-b3fb-44c7-8ba0-f08309b0dffc')
-    //     .then(lolrequest => lolrequest.json())
-    //     .then(lolrequest => {
-    //         lolprofile.matches = lolrequest.matches[0].lane
-    //         this.setData()
-    //     })
-    // },
+    getLastPlayedChampionId(accountId) {
+        fetch('https://br1.api.riotgames.com/lol/match/v3/matchlists/by-account/'+ accountId + '/recent?api_key=RGAPI-636f13eb-3e10-4edd-9cfb-d6dbfeb0a488')
+            .then(lolrequest => lolrequest.json())
+            .then(lolrequest => {
+                lolprofile.lastPlayedChampionId = lolrequest.matches[0].champion
+                this.getLastPlayedChampion(lolprofile.lastPlayedChampionId)
+                this.setData()
+            })
+    },
+
+    getLastPlayedChampion(championId) {
+        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ championId +'?locale=pt_BR&api_key=RGAPI-636f13eb-3e10-4edd-9cfb-d6dbfeb0a488')
+            .then(lolrequest => lolrequest.json())
+            .then(lolrequest => {
+                lolprofile.lastPlayedChampionId = lolrequest.key
+                this.setData()
+            })
+    },
+
+    getMasteryChampions(firstChampionId, secondChampionId) {
+        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ firstChampionId +'?locale=pt_BR&api_key=RGAPI-636f13eb-3e10-4edd-9cfb-d6dbfeb0a488')
+            .then(lolrequest => lolrequest.json())
+            .then(lolrequest => {
+                lolprofile.mastery.firstMasteryChampion.championName = lolrequest.key
+                this.setData()
+            })
+        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ secondChampionId +'?locale=pt_BR&api_key=RGAPI-636f13eb-3e10-4edd-9cfb-d6dbfeb0a488')
+            .then(lolrequest => lolrequest.json())
+            .then(lolrequest => {
+                lolprofile.mastery.secondMasteryChampion.championName = lolrequest.key
+                this.setData()
+            })
+    },
+
+    //Pegar 3 champions com maior mastery
+    getChampionMasteries(summonerId) {
+        fetch('https://br1.api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/'+ summonerId +'?api_key=RGAPI-636f13eb-3e10-4edd-9cfb-d6dbfeb0a488')
+            .then(lolrequest => lolrequest.json())
+            .then(lolrequest => {
+                lolprofile.mastery.firstMasteryChampion.level           = lolrequest[0].championLevel
+                lolprofile.mastery.firstMasteryChampion.points          = lolrequest[0].championPoints
+                lolprofile.mastery.firstMasteryChampion.championId      = lolrequest[0].championId
+                lolprofile.mastery.secondMasteryChampion.level          = lolrequest[1].championLevel
+                lolprofile.mastery.secondMasteryChampion.points         = lolrequest[1].championPoints
+                lolprofile.mastery.secondMasteryChampion.championId     = lolrequest[1].championId
+                this.getMasteryChampions(lolprofile.mastery.firstMasteryChampion.championId, lolprofile.mastery.secondMasteryChampion.championId)
+                this.setData()
+            })
+    },
+
 
     getLolProfile(){
-        return lolprofile
+        return lolprofile    
     }
 }

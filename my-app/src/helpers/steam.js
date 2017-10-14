@@ -24,7 +24,7 @@ export default window.steam = {
     },
 
     getSteamInfo() {
-            fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamids=76561197989030975')
+            fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamids=76561197996048272')
                 .then(steamrequest => steamrequest.json())
                 .then(steamrequest => {
                     steamprofile.personName    = steamrequest.response.players[0].personaname

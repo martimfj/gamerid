@@ -5,7 +5,7 @@
   "dependencies": {
     "chart.js": "^2.7.0",
     "material-ui": "^0.19.1",
-    "moment": "^2.18.1",
+    "moment": "2.18.1",
     "react": "^15.6.1",
     "react-chart.js": "^1.0.0",
     "react-chartjs-2": "^2.6.4",
