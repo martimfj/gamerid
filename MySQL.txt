@@ -1,0 +1,32 @@
+create table User (
+    id          bigint(20)     not null    auto_increment,
+    username    varchar(32) not null,
+    password    varchar(32) not null,    
+    email       varchar(64) not null,
+    
+    PRIMARY     KEY(id),
+    UNIQUE      KEY(username),
+    UNIQUE      KEY(email)
+    );
+
+create table Gamer_Tag (
+    id          bigint(20)     not null    auto_increment,
+    steam       varchar(32), 
+    riot        varchar(32), 
+    battlenet   varchar(32), 
+    discord     varchar(32), 
+    
+    PRIMARY     KEY(id),
+    UNIQUE      KEY(steam),
+    UNIQUE      KEY(riot),
+    UNIQUE      KEY(battlenet),
+    UNIQUE      KEY(discord),
+    FOREIGN KEY(id) REFERENCES user(id)
+    );
+
+SELECT * FROM user JOIN gamer_tag ON  user.id = gamer_tag.id;
+
+ALTER TABLE User ADD FOREIGN KEY (`id`) REFERENCES gamer_tag(`id`);
+
+SET FOREIGN_KEY_CHECKS=0
+SET FOREIGN_KEY_CHECKS=1
