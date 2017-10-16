@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField'
 import CircularProgress from 'material-ui/CircularProgress';
 import leagueoflegends from './helpers/leagueoflegends.js'
-import Gold from './icons/tier-icons/gold_v.png'
-import _ from 'lodash'
+import Gold from './icons/tier-icons/gold_v.png';
+import _ from 'lodash';
 
 import {Pie} from 'react-chartjs-2';
 
@@ -22,7 +22,7 @@ class LeagueOfLegends extends Component {
                 losses: ''
             }
         };
-        
+
         /*this.user = auth.getUser()*/
 
     }
@@ -42,7 +42,7 @@ class LeagueOfLegends extends Component {
 
     componentWillReceiveProps() {
     }
-    
+
 
     render() {
         let data = {
@@ -53,26 +53,24 @@ class LeagueOfLegends extends Component {
         };
 
         return (
-            <div style={ this.props.margin ? { marginLeft:275,marginRight:25 } : { marginLeft : 0 }}>
-            <div className='row centered'>
-                <div className='note-input-wrapper' style={{backgroundColor : '#ffffff' }}>
-                    <div>
-                        <img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Jinx.png" />
-                        <p>{this.state.lolprofile.summonerName}</p>
-                        <p>{this.state.lolprofile.summonerLevel}</p>
-                        <p>{this.state.lolprofile.tier} {this.state.lolprofile.rank}</p>
-                        <img src={Gold} />
-                        <Pie data={data}/>
-                    </div>
+              <div>
+                  <div>
+                      <div>
+                          <img src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Jinx.png" />
+                          <p>{this.state.lolprofile.summonerName}</p>
+                          <p>{this.state.lolprofile.summonerLevel}</p>
+                          <p>{this.state.lolprofile.tier} {this.state.lolprofile.rank}</p>
+                          <img src={Gold} />
+                          <Pie data={data}/>
+                      </div>
 
-                    <div className='row center canvas-container'>
-                        { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
-                        { _.values(this.state.images).reverse() }
-                        <img className='note-input-img' src={this.state.imgSrc}/>
-                    </div>                    
-                </div>
-            </div>
-        </div>
+                      <div >
+                          { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
+                          { _.values(this.state.images).reverse() }
+                          <img className='note-input-img' src={this.state.imgSrc}/>
+                      </div>
+                  </div>
+              </div>
         );
     }
 }

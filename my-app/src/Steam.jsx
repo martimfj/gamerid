@@ -18,7 +18,7 @@ class Steam extends Component {
                 cityId: null
             }
         };
-        
+
         /*this.user = auth.getUser()*/
 
     }
@@ -38,13 +38,13 @@ class Steam extends Component {
 
     componentWillReceiveProps() {
     }
-    
+
 
     render() {
         return (
-            <div style={ this.props.margin ? { marginLeft:275,marginRight:25 } : { marginLeft : 0 }}>
-            <div className='row centered'>
-                <div className='note-input-wrapper' style={{backgroundColor : '#ffffff' }}>
+            <div>
+            <div>
+                <div>
                     <div>
                         <img src={this.state.steamprofile.avatarFullUrl} />
                         <p>{this.state.steamprofile.personName}</p>
@@ -52,7 +52,7 @@ class Steam extends Component {
                         <p>{this.state.steamprofile.steamId}</p>
                     </div>
 
-                    <div className='row center canvas-container'>
+                    <div >
                         { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
                         { _.values(this.state.images).reverse() }
                         <img className='note-input-img' src={this.state.imgSrc}/>
