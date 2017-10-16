@@ -8,9 +8,13 @@ var steamprofile = {
                     steamId: null,
                     profileUrl: null,
                     avatarFullUrl: null,
-                    countryCode: null,
-                    stateId: null,
-                    cityId: null
+                    csgo: {
+                        kills: null,
+                        deaths: null,
+                        mvps: null,
+                        timePlayed: null,
+                        headshots: null,
+                    }
                 }
 
 export default window.steam = {
@@ -24,20 +28,30 @@ export default window.steam = {
     },
 
     getSteamInfo() {
-            fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamids=76561197989030975')
+            fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamids=76561197996048272')
                 .then(steamrequest => steamrequest.json())
                 .then(steamrequest => {
                     steamprofile.personName    = steamrequest.response.players[0].personaname
                     steamprofile.steamId       = steamrequest.response.players[0].steamid
                     steamprofile.profileUrl    = steamrequest.response.players[0].profileurl
                     steamprofile.avatarFullUrl = steamrequest.response.players[0].avatarfull
-                    steamprofile.countryCode   = steamrequest.response.players[0].loccountrycode
-                    steamprofile.stateId       = steamrequest.response.players[0].locstatecode
-                    steamprofile.cityId        = steamrequest.response.players[0].loccityid
+                    this.getCSGOInfo()
                     this.setData()
                 })
                 
         },
+    getCSGOInfo() {
+        fetch('http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamid=76561197996048272')
+        .then(steamrequest => steamrequest.json())
+        .then(steamrequest => {
+            steamprofile.csgo.kills = steamrequest.playerstats.stats[0].value
+            steamprofile.csgo.deaths = steamrequest.playerstats.stats[1].value
+            steamprofile.csgo.mvps = steamrequest.playerstats.stats[104].value
+            steamprofile.csgo.timePlayed = steamrequest.playerstats.stats[2].value
+            steamprofile.csgo.headshots = steamrequest.playerstats.stats[25].value
+            this.setData()
+        })
+    },
 
     getSteamProfile(){
         return steamprofile
