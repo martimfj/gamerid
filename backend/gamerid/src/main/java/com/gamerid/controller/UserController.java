@@ -1,6 +1,8 @@
 package com.gamerid.controller;
 
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,48 +28,94 @@ public class UserController {
 	@Autowired
 	private GamerTagService gamertagService;
 
+	//@RequestParam(value = "discord", required=false) String discord) -> Caso o Parâmetro não seja obrigatorio
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
 	public @ResponseBody String addUser (@RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String steam, @RequestParam String riot, @RequestParam String battlenet, @RequestParam String discord){
 		User userExists = userService.findByUsername(username);
 		User emailExists = userService.findByEmail(email);
-		User steamExists = gamertagService.findBySteam(battlenet);
-		User riotExists = gamertagService.findByRiot(battlenet);
-		User battlenetExists = gamertagService.findByBattlenet(battlenet);
-		User discordExists = gamertagService.findByDiscord(battlenet);
+		User user = new User();
+		user.setPassword(password);
 		
 		if (userExists != null) {
 			System.out.println(username + " já é cadastrado");
 			return username + " já é cadastrado";
-		}
+		}else{user.setUsername(username);}
 		
 		if (emailExists != null) {
 			System.out.println(email + " já é cadastrado");
 			return email + " já é cadastrado";
+		}else{user.setEmail(email);}
+		
+		if(steam.equals("null")){
+			user.setSteam(null);
+			System.out.println("Nenhuma SteamID passada no cadastro");
 		}
-		
-		if (steamExists != null || riotExists != null || battlenetExists != null || discordExists != null ) {
-			System.out.println("Alguma GamerTag já é cadastrada");
-			return "Alguma GamerTag já é cadastrada";
-		} 
-		
 		else{
-			User user = new User();
-			user.setUsername(username);
-			user.setPassword(password);
-			user.setEmail(email);
-			user.setSteam(steam);
-			user.setRiot(riot);
-			user.setBattlenet(battlenet);
-			user.setDiscord(discord);
-			
-			userService.saveUser(user);
-			System.out.println("User created:");
-			System.out.println(user);
-			return "Usuário criado";
+			User steamExists = gamertagService.findBySteam(steam);
+			if (steamExists != null){
+				System.out.println(steam+" GamerTag já é cadastrada");
+				return steam+ "GamerTag já é cadastrada";
+			}else{user.setSteam(steam);}
 		}
+		
+		if(riot.equals("null")){
+			user.setRiot(null);
+			System.out.println("Nenhuma RiotID passada no cadastro");
+		}
+		else{
+			User riotExists = gamertagService.findByRiot(riot);
+			if (riotExists != null){
+				System.out.println(riot+" GamerTag já é cadastrada");
+				return riot+ "GamerTag já é cadastrada";
+			}else{user.setRiot(riot);}
+		}
+		
+		if(battlenet.equals("null")){
+			user.setBattlenet(null);
+			System.out.println("Nenhuma BattlenetID passada no cadastro");
+		}
+		else{
+			User battlenetExists = gamertagService.findByBattlenet(battlenet);
+			if (battlenetExists != null){
+				System.out.println(battlenet+" GamerTag já é cadastrada");
+				return battlenet+ "GamerTag já é cadastrada";
+			}else{user.setBattlenet(battlenet);}
+		}
+		
+		if(discord.equals("null")){
+			user.setDiscord(null);
+			System.out.println("Nenhuma DiscordID passada no cadastro");
+		}
+		else{
+			User discordExists = gamertagService.findByDiscord(discord);
+			if (discordExists != null){
+				System.out.println(discord+" GamerTag já é cadastrada");
+				return discord+ "GamerTag já é cadastrada";
+			}else{user.setDiscord(discord);}
+		}
+			
+		userService.saveUser(user);
+		System.out.println("User created:");
+		System.out.println(user);
+		return "Usuário criado";
 		
 		// http://localhost:8080/api/addUser?username={}&password={}&email={}&steam={}&riot={}&battlenet={}&discord={}
 		// Cria um usuário
+		// Discord param = Nome + %23 + Número
+		// Check http://www.eso.org/~ndelmott/url_encode.html for other representations
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public @ResponseBody String login (@RequestParam String username, @RequestParam String password){
+		System.out.println("Autenticando username: " + username + " | password: " + password);
+		User userExists = userService.findByUsername(username);
+		
+		if (Objects.equals(userExists.getPassword(), password)){
+			System.out.println("Senha verificada");
+		} else{
+			System.out.println("Senha errada");
+		}
+		return "Login feito";
 	}
 	
 	@RequestMapping(value = "/allUsers", method = RequestMethod.GET)
