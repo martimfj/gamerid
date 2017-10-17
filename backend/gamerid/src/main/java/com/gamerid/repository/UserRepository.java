@@ -37,5 +37,42 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	@Transactional
 	@Query("update User u set u.username = ?1 where u.email = ?2")
 	void setUserUsernameByEmail(String username, String email);
+	
+	// -------------------------- Gamertag -------------------------- //
+	
+	@Transactional
+	User findBySteam(@Param("steam") String steam);
+	
+	@Transactional
+	User findByRiot(@Param("riot") String riot);
+	
+	@Transactional
+	User findByBattlenet(@Param("battlenet")String battlenet);
+	
+	@Transactional
+	User findByDiscord(@Param("discord")String discord);
+
+	// Update GamerTags
+	@Modifying
+	@Transactional
+	@Query("update User u set u.steam = ?1 where u.username = ?2")
+	void setSteam(String steam, String username);
+	
+	@Modifying
+	@Transactional
+	@Query("update User u set u.riot = ?1 where u.username = ?2")
+	void setRiot(String riot, String username);
+	
+	@Modifying
+	@Transactional
+	@Query("update User u set u.battlenet = ?1 where u.username = ?2")
+	void setBattlenet(String battlenet, String username);
+	
+	@Modifying
+	@Transactional
+	@Query("update User u set u.discord = ?1 where u.username = ?2")
+	void setDiscord(String discord, String username);
+	
+	
 }
 

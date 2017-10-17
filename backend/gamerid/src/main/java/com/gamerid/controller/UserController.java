@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gamerid.bean.User;
 import com.gamerid.repository.UserRepository;
+import com.gamerid.service.GamerTagService;
 import com.gamerid.service.UserService;
 
 @Controller
@@ -22,11 +23,17 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private GamerTagService gamertagService;
 
 	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
-	public @ResponseBody String addUser (@RequestParam String username, @RequestParam String password, @RequestParam String email){
+	public @ResponseBody String addUser (@RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String steam, @RequestParam String riot, @RequestParam String battlenet, @RequestParam String discord){
 		User userExists = userService.findByUsername(username);
 		User emailExists = userService.findByEmail(email);
+		User steamExists = gamertagService.findBySteam(battlenet);
+		User riotExists = gamertagService.findByRiot(battlenet);
+		User battlenetExists = gamertagService.findByBattlenet(battlenet);
+		User discordExists = gamertagService.findByDiscord(battlenet);
 		
 		if (userExists != null) {
 			System.out.println(username + " já é cadastrado");
@@ -36,6 +43,11 @@ public class UserController {
 		if (emailExists != null) {
 			System.out.println(email + " já é cadastrado");
 			return email + " já é cadastrado";
+		}
+		
+		if (steamExists != null || riotExists != null || battlenetExists != null || discordExists != null ) {
+			System.out.println("Alguma GamerTag já é cadastrada");
+			return "Alguma GamerTag já é cadastrada";
 		} 
 		
 		else{
@@ -43,6 +55,10 @@ public class UserController {
 			user.setUsername(username);
 			user.setPassword(password);
 			user.setEmail(email);
+			user.setSteam(steam);
+			user.setRiot(riot);
+			user.setBattlenet(battlenet);
+			user.setDiscord(discord);
 			
 			userService.saveUser(user);
 			System.out.println("User created:");
@@ -50,8 +66,7 @@ public class UserController {
 			return "Usuário criado";
 		}
 		
-		// http://localhost:8080/api/addUser?username={}&password={}&email={}
-		// http://localhost:8080/api/addUser?username=Martim&password=123456&email=martimfj@al.insper.edu.br
+		// http://localhost:8080/api/addUser?username={}&password={}&email={}&steam={}&riot={}&battlenet={}&discord={}
 		// Cria um usuário
 	}
 	
@@ -66,18 +81,14 @@ public class UserController {
 	public @ResponseBody String deleteUser (@PathVariable("username") String username){
 		return userRepository.deleteByUsername(username);
 		// http://localhost:8080/api/deleteUser/{username}
-		// http://localhost:8080/api/deleteUser/Martim
 		// Deleta um usuário em especifico
-		
 	}
-	
 	
 	@RequestMapping(value = "/editUserPassword", method = RequestMethod.GET)
 	public @ResponseBody String editUserPassword (@RequestParam String username, @RequestParam String password){
 		userService.setUserPasswordByUsername(password, username);
 		return "Senha alterada";
 		// http://localhost:8080/api/editUserPassword?username={}&password={}
-		// http://localhost:8080/api/editUserPassword?username=Martim&password=123456
 		// Edita a senha de um usuário
 	}
 	
@@ -94,7 +105,6 @@ public class UserController {
 			return "Email alterado";
 		}
 		// http://localhost:8080/api/editUserEmail?email={}&username={}
-		// http://localhost:8080/api/editUserEmail?email=martim@insper.edu.br&username=Martim
 		// Edita o email de um usuário
 	}
 	
@@ -111,9 +121,78 @@ public class UserController {
 			return "Username alterado";
 		}
 		// http://localhost:8080/api/editUserUsername?username={}&email={}
-		// http://localhost:8080/api/editUserUsername?username=Martim&email=martim@insper.edu.br
 		// Edita o nome de usuário de um usuário
+	}
+	
+	// -------------------------- Gamertag -------------------------- //
+	
+	@RequestMapping(value = "/setSteamID", method = RequestMethod.GET)
+	public @ResponseBody String setSteamID (@RequestParam String steam, String username){
+		User steamExists = gamertagService.findBySteam(steam);
+		
+		if (steamExists != null) {
+			System.out.println(steam + " já é cadastrado");
+			return steam + " já é cadastrado";
+		}
+				
+		else{
+			gamertagService.setSteam(steam, username);
+			return "SteamID criado";
+		}
+		// http://localhost:8080/api/setSteamID?steam={}&username={}
+		// Cria a um SteamID
+	}
+	
+	@RequestMapping(value = "/setRiotID", method = RequestMethod.GET)
+	public @ResponseBody String setRiotID (@RequestParam String riot, String username){
+		User riotExists = gamertagService.findByRiot(riot);
+		
+		if (riotExists != null) {
+			System.out.println(riot + " já é cadastrado");
+			return riot + " já é cadastrado";
+		}
+				
+		else{
+			gamertagService.setRiot(riot, username);
+			return "RiotID criado";
+		}
+		// http://localhost:8080/api/setRiotID?riot={}&username={}
+		// Cria a um RiotID
+	}
+	
+	@RequestMapping(value = "/setBattlenetID", method = RequestMethod.GET)
+	public @ResponseBody String setBattlenetID (@RequestParam String battlenet, String username){
+		User battlenetExists = gamertagService.findByBattlenet(battlenet);
+		
+		if (battlenetExists != null) {
+			System.out.println(battlenet + " já é cadastrado");
+			return battlenet + " já é cadastrado";
+		}
+				
+		else{
+			gamertagService.setRiot(battlenet, username);
+			return "BattlenetID criado";
+		}
+		// http://localhost:8080/api/setBattlenetID?battlenet={}&username={}
+		// Cria a um BattlenetID
+	}
+	
+	@RequestMapping(value = "/setDiscordID", method = RequestMethod.GET)
+	public @ResponseBody String setDiscordID (@RequestParam String discord, String username){
+		User discordExists = gamertagService.findByDiscord(discord);
+		
+		if (discordExists != null) {
+			System.out.println(discord + " já é cadastrado");
+			return discord + " já é cadastrado";
+		}
+				
+		else{
+			gamertagService.setDiscord(discord, username);
+			return "DiscordID criado";
+		}
+		// http://localhost:8080/api/setDiscordID?discord={}&username={}
+		// Cria a um DiscordID
 	}
 }
 
-// Os requests são case sensitive
+// ATENÇÃO: Os requests são case sensitive

@@ -1,56 +1,38 @@
 package com.gamerid.bean;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-
-// https://hellokoding.com/jpa-one-to-one-foreignkey-relationship-example-with-spring-boot-maven-and-mysql/
-// https://stackoverflow.com/questions/38696214/how-to-model-a-one-to-one-relationship-in-jpa-when-the-parent-table-has-a-comp
-// https://www.dineshonjava.com/spring-crud-example-using-one-to-one/
-// https://hellokoding.com/registration-and-login-example-with-spring-security-spring-boot-spring-data-jpa-hsql-jsp/
-// https://www.mkyong.com/hibernate/hibernate-one-to-one-relationship-example-annotation/
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table(name = "user", catalog = "gamerid", uniqueConstraints = 
-		@UniqueConstraint(columnNames = {"username","password","email"}))
-
 public class User {
-    private Long userId;
+    private @Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
 	private String username;
 	private String password;
 	private String email;
-	private GamerTag gamerTag;
-
+	private String steam;
+	private String riot;
+	private String battlenet;
+	private String discord;
+	
 	public User() {}
 	
-	public User(String username, String password, String email){
+	public User(String username, String password, String email, String steam, String riot, String battlenet, String discord){
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.steam = steam;
+        this.riot = riot;
+        this.battlenet = battlenet;
+        this.discord = discord;
 	}
 	
-	public User(String username, String password, String email, GamerTag gamerTag){
-		this.username = username;
-		this.password = password;
-		this.email = email;
-		this.gamerTag = gamerTag;
-	}
-	
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "user_id", unique = true, nullable = false)
-	public Long getUserId() {  
-		return userId;  
+	public Long getId() {  
+		return id;  
 	}  
-	public void setUserId(Long userId) {  
-		this.userId = userId;  
+	public void setId(Long id) {  
+		this.id = id;  
 	} 
 	public String getUsername() {
 		return username;
@@ -70,11 +52,28 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	public GamerTag getGamerTag() {
-		return gamerTag;
+	public String getSteam() {
+		return steam;
 	}
-	public void setGamerTag(GamerTag gamerTag) {
-		this.gamerTag = gamerTag;
+	public void setSteam(String steam) {
+		this.steam = steam;
+	}
+	public String getRiot() {
+		return riot;
+	}
+	public void setRiot(String riot) {
+		this.riot = riot;
+	}
+	public String getBattlenet() {
+		return battlenet;
+	}
+	public void setBattlenet(String battlenet) {
+		this.battlenet = battlenet;
+	}
+	public String getDiscord() {
+		return discord;
+	}
+	public void setDiscord(String discord) {
+		this.discord = discord;
 	}
 }
