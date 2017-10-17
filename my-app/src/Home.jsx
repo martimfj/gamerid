@@ -19,7 +19,7 @@ class Home extends Component {
             user : auth.getUser(),
             drawer : true,
             filter : 'all',
-            wichGame: '',
+            wichGame: 'battlenet',
         }
         this.returnGameComponent = this.returnGameComponent.bind(this);
     }
@@ -60,11 +60,13 @@ class Home extends Component {
 
     render() {
         return (
-            <div>
+            <div style={{
+              backgroundColor: '#fff'
+            }}>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css"/>
                 <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
-                <Grid>
+                <Grid >
                   <Row>
                       { this.state.drawer ?
                         <Col md={3}>
@@ -80,7 +82,15 @@ class Home extends Component {
                         ''
                       }
                     <Col md={this.state.drawer ? 9 : 12}>
-                      {this.returnGameComponent()}
+                      <div 
+                      id='game-container'
+                      style={{
+                        padding: '2%',
+                        margin: '0',
+                        textAlign: 'center'
+                      }}>
+                         {this.returnGameComponent()}
+                      </div>
                     </Col>
                   </Row>
                 </Grid>

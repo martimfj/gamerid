@@ -9,7 +9,7 @@ import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
-
+import TextField from 'material-ui/TextField';
 import logo from './icons/logo.png'
 import steam from './icons/steam.png'
 import leagueoflegends from './icons/leagueoflegends.png'
@@ -29,9 +29,11 @@ class Navbar extends Component {
             open : false,
             anchorEl : null,
             drawer : null,
-            show : false
+            show : false,
+            value: null,
         }
         {/* user : auth.getUser(), */}
+        this.handleSearchChange = this.handleSearchChange.bind(this);
     }
 
     componentWillMount() {
@@ -45,6 +47,11 @@ class Navbar extends Component {
         docked: this.mql.matches,
         open: this.mql.matches
         })
+    }
+
+    handleSearchChange(e) {
+        console.log(e);
+        this.setState({value: e.target.value});
     }
 
     toggleDrawer = () => {
@@ -68,16 +75,22 @@ class Navbar extends Component {
     render() {
         return (
             <div>
-            <div key='navbar' className="navbar-fixed" style={{backgroundColor:'#ffca28', zIndex: 5}}>
+            <div key='navbar' className="navbar-fixed" style={{zIndex: 5}}>
                 <nav className="nav">
-                    <div id="navbar" className="nav-wrapper sticky">
+                        <div id="navbar" className="nav-wrapper sticky">
                         <ul>
                             <div className="middleimg center logo" style={{height:50}}>
-                                <img className='logo' src={logo} width={50}/>
+                                <p style= {{
+                                    fontSize:'24px',
+                                    fontFamily: 'space'
+                                    
+                                }}>
+                                    <strong> GAMER ID </strong>
+                                </p>
                             </div>
                         </ul>
 
-                        <ul className="left">
+                        <ul style = {{paddingLeft:'15px'}}className="left">
                         <li>
                             <div className="row valign-wrapper">
                                 <a onClick={this.toggleDrawer}>
@@ -87,11 +100,16 @@ class Navbar extends Component {
                         </li>
                         </ul>
 
-                        <ul className="right">
+                        <ul className="right" style={{marginRight:'40px'}}>
                             <li>
-                                <IconButton onClick={this.handleLockPress}>
-                                    <FontIcon className="material-icons" > refresh </FontIcon>
-                                </IconButton>
+                                <TextField
+                                        floatingLabelStyle = {{
+                                        backgroundColor: '#fff'
+                                    }}
+                                    id="text-field-controlled"
+                                    value={this.state.value}
+                                    onChange={this.handleSearchChange}
+                                />
                             </li>
                         </ul>
                     </div>

@@ -63,9 +63,13 @@ class LeftDrawer extends Component {
 
     render() {
         return (
-            <div>
+            <div
+            >
             <Drawer
                 key='sidebar'
+                overlayStyle={{
+                    backgroundColor: '#000 !important'
+                }}
                 docked={this.state.docked}
                 containerClassName='drawer'
                 width={250}>

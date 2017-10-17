@@ -3,6 +3,7 @@ import TextField from 'material-ui/TextField'
 import CircularProgress from 'material-ui/CircularProgress';
 import steam from './helpers/steam.js'
 import _ from 'lodash'
+import './lol.css';
 
 class Steam extends Component {
     constructor(props) {
@@ -56,23 +57,46 @@ class Steam extends Component {
             <div>
                 <div>
                     <div>
-                        <img src={this.state.steamprofile.avatarFullUrl} />
-                        <p>{this.state.steamprofile.personName}</p>
-                        <p>{this.state.steamprofile.profileUrl}</p>
-                        <img src={csgoImage} />
-                        <p>Time Played: {timePlayed.toFixed(0)} Hours</p>
-                        <p>Kills: {this.state.steamprofile.csgo.kills}</p>
-                        <p>Deaths: {this.state.steamprofile.csgo.deaths}</p>
-                        <p>MVPs: {this.state.steamprofile.csgo.mvps}</p>
-                        <p>K/D Ratio: {kdratio.toFixed(2)}</p>
-                        <p>Headshot %: {headshotPercentage.toFixed(2)}</p>
+                        <div className='flex-row-around'>
+                            <img src={this.state.steamprofile.avatarFullUrl} />
+                            <h1 style={{paddingRight:'50px'}} className='flex-column-centered'>
+                                <strong>{this.state.steamprofile.personName}</strong>
+                            </h1>
+                        </div>
+                        <div style={{paddingTop:'30px'}}>
+                                <a href={this.state.steamprofile.profileUrl}><span><strong>Visit profile</strong></span></a>
+                        </div>
+                        <div style={{ paddingTop: '30px' }}>
+                            <h1><strong> Counter Strike: Global Offensive </strong> </h1>
+                            <img src={csgoImage} />
+                            <h2 className='sub-title'> Player Stats </h2>
+                            <div style={{ backgroundColor: '#d3d3d3' }} className='character-attributes-line'>
+                                    <p> <strong>Time Played  </strong></p>
+                                    <p>{timePlayed.toFixed(0)} Hours </p>
+                            </div>
+                            <div className='character-attributes-line'>
+                                    <p> <strong>Kills  </strong></p>
+                                    <p>{this.state.steamprofile.csgo.kills} </p>
+                            </div>
+                            <div style={{ backgroundColor: '#d3d3d3' }} className='character-attributes-line'>
+                                    <p> <strong>Deaths  </strong></p>
+                                    <p>{this.state.steamprofile.csgo.deaths} </p>
+                            </div>
+                            <div className='character-attributes-line'>
+                                    <p> <strong>MVPs </strong></p>
+                                    <p>{this.state.steamprofile.csgo.mvps} </p>
+                            </div>
+                            <div style={{ backgroundColor: '#d3d3d3' }} className='character-attributes-line'>
+                                    <p> <strong>K/D Ratio  </strong></p>
+                                    <p> {kdratio.toFixed(2)}</p>
+                            </div>
+                            <div className='character-attributes-line'>
+                                    <p> <strong>Headshot %   </strong></p>
+                                    <p> {headshotPercentage.toFixed(2)}</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div >
-                        { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
-                        { _.values(this.state.images).reverse() }
-                        <img className='note-input-img' src={this.state.imgSrc}/>
-                    </div>
                 </div>
             </div>
         </div>
