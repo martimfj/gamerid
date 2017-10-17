@@ -1,16 +1,20 @@
 package com.gamerid.bean;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity // This tells Hibernate to make a table out of this class
-@Table (name = "gamer_tag")
+@Table(name = "gamer_tag", catalog = "gamerid")
 public class GamerTag {
-    private @Id @GeneratedValue(strategy=GenerationType.IDENTITY) Long id;
+    private Long userId;
 	private String steam;
 	private String riot;
 	private String battlenet;
@@ -19,19 +23,32 @@ public class GamerTag {
 	
 	public GamerTag() {}
 	
-	public GamerTag(String steam, String riot, String battlenet, String discord){
-        this.steam = steam;
+	public GamerTag(User user, String steam, String riot, String battlenet, String discord){
+        this.user = user;
+		this.steam = steam;
         this.riot = riot;
         this.battlenet = battlenet;
         this.discord = discord;
 	}
-		
-	public Long getId() {  
-		return id;  
+
+	@GeneratedValue(generator = "generator")
+	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "user"))
+	@Id
+	@Column(name = "user_id", unique = true, nullable = false)
+	public Long getUserId() {  
+		return userId;  
 	}  
-	public void setId(Long id) {  
-		this.id = id;  
-	} 
+	public void setUserId(Long userId) {  
+		this.userId = userId;  
+	}
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 	public String getSteam() {
 		return steam;
 	}
@@ -56,14 +73,5 @@ public class GamerTag {
 	public void setDiscord(String discord) {
 		this.discord = discord;
 	}
-	
-	@OneToOne(mappedBy = "gamerTag")
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
 
