@@ -41,7 +41,7 @@ export default window.leagueoflegends = {
     },
 
     getSummoner(summonerName) {
-        fetch('https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/'+ lolprofile.summonerName +'?api_key=RGAPI-7f69729c-6668-4f1e-8ed1-3545f6c3391a')
+        fetch('https://br1.api.riotgames.com/lol/summoner/v3/summoners/by-name/'+ lolprofile.summonerName +'?api_key=RGAPI-467c2a2d-460d-4c5c-aac9-ddd55734fea0')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.summonerName  = lolrequest.name
@@ -55,7 +55,7 @@ export default window.leagueoflegends = {
         },
 
     getRank(summonerId) {
-        fetch('https://br1.api.riotgames.com/lol/league/v3/positions/by-summoner/'+ summonerId +'?api_key=RGAPI-7f69729c-6668-4f1e-8ed1-3545f6c3391a')
+        fetch('https://br1.api.riotgames.com/lol/league/v3/positions/by-summoner/'+ summonerId +'?api_key=RGAPI-467c2a2d-460d-4c5c-aac9-ddd55734fea0')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.tier   = lolrequest[0].tier
@@ -68,7 +68,7 @@ export default window.leagueoflegends = {
     },
 
     getLastPlayedChampionId(accountId) {
-        fetch('https://br1.api.riotgames.com/lol/match/v3/matchlists/by-account/'+ accountId + '/recent?api_key=RGAPI-7f69729c-6668-4f1e-8ed1-3545f6c3391a')
+        fetch('https://br1.api.riotgames.com/lol/match/v3/matchlists/by-account/'+ accountId + '/recent?api_key=RGAPI-467c2a2d-460d-4c5c-aac9-ddd55734fea0')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.lastPlayedChampionId = lolrequest.matches[0].champion
@@ -78,7 +78,7 @@ export default window.leagueoflegends = {
     },
 
     getLastPlayedChampion(championId) {
-        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ championId +'?locale=pt_BR&api_key=RGAPI-7f69729c-6668-4f1e-8ed1-3545f6c3391a')
+        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ championId +'?locale=pt_BR&api_key=RGAPI-467c2a2d-460d-4c5c-aac9-ddd55734fea0')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.lastPlayedChampion = lolrequest.key
@@ -87,13 +87,13 @@ export default window.leagueoflegends = {
     },
 
     getMasteryChampions(firstChampionId, secondChampionId) {
-        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ firstChampionId +'?locale=pt_BR&api_key=RGAPI-7f69729c-6668-4f1e-8ed1-3545f6c3391a')
+        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ firstChampionId +'?locale=pt_BR&api_key=RGAPI-467c2a2d-460d-4c5c-aac9-ddd55734fea0')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.mastery.firstMasteryChampion.championName = lolrequest.key
                 this.setData()
             })
-        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ secondChampionId +'?locale=pt_BR&api_key=RGAPI-7f69729c-6668-4f1e-8ed1-3545f6c3391a')
+        fetch('https://br1.api.riotgames.com/lol/static-data/v3/champions/'+ secondChampionId +'?locale=pt_BR&api_key=RGAPI-467c2a2d-460d-4c5c-aac9-ddd55734fea0')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.mastery.secondMasteryChampion.championName = lolrequest.key
@@ -102,7 +102,7 @@ export default window.leagueoflegends = {
     },
 
     getChampionMasteries(summonerId) {
-        fetch('https://br1.api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/'+ summonerId +'?api_key=RGAPI-7f69729c-6668-4f1e-8ed1-3545f6c3391a')
+        fetch('https://br1.api.riotgames.com/lol/champion-mastery/v3/champion-masteries/by-summoner/'+ summonerId +'?api_key=RGAPI-467c2a2d-460d-4c5c-aac9-ddd55734fea0')
             .then(lolrequest => lolrequest.json())
             .then(lolrequest => {
                 lolprofile.mastery.firstMasteryChampion.level           = lolrequest[0].championLevel

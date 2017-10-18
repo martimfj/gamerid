@@ -18,14 +18,18 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      auth : true,
+      auth : null,
       open : false,
       error : '',
       dialogState : 'login',
       textFields : {
         email : '',
         password : '',
-        userName : ''
+        userName : '',
+        steam : '',
+        riot : '',
+        battlenet : '',
+        discord : ''
       }
     }
   }
@@ -55,7 +59,7 @@ class App extends Component {
   }
 
   handleLogin = () => {
-    auth.login(this.state.textFields.email,this.state.textFields.password,(result) => {
+    auth.login(this.state.textFields.userName,this.state.textFields.password,(result) => {
       if (result.status == 401){
         this.setState({ error : "Senha incorreta. Verifique sua senha e tente novamente"})
       } else if (result.status == 404){
@@ -67,7 +71,9 @@ class App extends Component {
   }
 
   handleRegister = () => {
-    auth.register(this.state.textFields.email,this.state.textFields.userName,this.state.textFields.password,(result) => {
+    auth.register(this.state.textFields.email,this.state.textFields.userName,this.state.textFields.password,this.state.textFields.email,this.state.textFields.userName,this.state.textFields.password,
+      this.state.textFields.steam, this.state.textFields.riot, this.state.textFields.battlenet,
+      this.state.textFields.discord, (result) => {
       if (result.status == "SUCCESS"){
         this.setState({ open:false, auth: auth.getUser() })
       } else if (result.status == "FAILURE"){
@@ -93,11 +99,11 @@ class App extends Component {
           <span> 
             <TextField
                 className='col s12 centered'
-                id='email'
-                floatingLabelText="Email"
-                value={this.state.textFields.email}
+                id='userName'
+                floatingLabelText="Usuario"
+                value={this.state.textFields.userName}
                 onChange={this.handleTextChange}
-                type='email'
+                type='text'
               />
               <TextField
                 className='col s12 centered'
@@ -151,6 +157,38 @@ class App extends Component {
                 type='text'
                 errorText={ this.state.textFields.userName.length > 16 ? "O tamanho máximo é 16 caracteres" : null }
                 id='userName'
+              />
+              <TextField
+                className='col s12 centered'
+                floatingLabelText="ID da Steam"
+                value={this.state.textFields.steam}
+                onChange={this.handleTextChange}
+                type='text'
+                id='steam'
+              />
+              <TextField
+                className='col s12 centered'
+                floatingLabelText="Nome de Invocador do LoL"
+                value={this.state.textFields.riot}
+                onChange={this.handleTextChange}
+                type='text'
+                id='riot'
+              />
+              <TextField
+                className='col s12 centered'
+                floatingLabelText="Usuario da Battlenet"
+                value={this.state.textFields.battlenet}
+                onChange={this.handleTextChange}
+                type='text'
+                id='battlenet'
+              />
+              <TextField
+                className='col s12 centered'
+                floatingLabelText="Usuario do Discord"
+                value={this.state.textFields.discord}
+                onChange={this.handleTextChange}
+                type='text'
+                id='discord'
               />
               <TextField
                 className='col s12 centered'

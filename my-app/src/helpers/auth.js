@@ -6,37 +6,35 @@ import {EventEmitter} from 'events'
 const emitter = new EventEmitter();
 emitter.setMaxListeners(20)
 
-const baseUrl = 'http://localhost:8080/api'
+const baseUrl = 'http://localhost:8080/api/'
 
 var user = { 
     id : null ,
     email : null,
     username : null,
-    password : null
+    password : null,
+    riot : null,
+    steam : null,
+    battlenet : null,
+    discord : null
 }
 
 export default window.auth = {
-    login : (email,password,callback) => {
-        console.log('Logging in with',email,password)
-        fetch(baseUrl + 'login', {
-            method: 'POST',
-            body : JSON.stringify({
-                action : 'AUTH',
-                payload : {
-                    email : email,
-                    password : password
-                }
-            })
-        }).then((response) => {
+    login : (username,password,callback) => {
+        console.log('Logging in with',username,password)
+        var url = baseUrl + 'login?username=' + username + '&password=' + password;
+        console.log(password)
+        fetch(url).then((response) => {
             var data = response.json().then((data) => {
-                if (data.status == 200) {
+                if (data.username !== null) {
                     console.log( '[Auth] Auth Successful',data)
-                    localStorage.setItem('user',JSON.stringify(data.payload))
-                    user = data.payload
+                    localStorage.setItem('user',JSON.stringify(data))
+                    user = data
                 } else {
-                    console.log('[Auth] Auth failed,error ' + data.status)
+                    console.log('[Auth] Auth failed,error ' + data)
                 }
             callback(data)
+            window.location.reload()
             })
         })
     },
@@ -45,6 +43,7 @@ export default window.auth = {
         let localStorageUser = localStorage.getItem('user')
         if(localStorageUser){
             user = JSON.parse(localStorageUser)
+            user = localStorageUser
             console.log('[Auth] Retreived user from last session',user)
             callback(user)
         }
@@ -54,28 +53,19 @@ export default window.auth = {
         return user
     },
 
-    register : (email,username,password,callback) => {
-        console.log('Registering with',email,password)
-        fetch(baseUrl + 'register', {
-            method: 'POST',
-            body : JSON.stringify({
-                action : 'REGISTER',
-                payload : {
-                    email : email,
-                    username : username,
-                    password : password
-                }
-            })
-        }).then((response) => {
+    register : (email,username,password,steam,riot,battlenet,discord,callback) => {
+        console.log('Registering with',username,password)
+        fetch(baseUrl + 'addUser?username=' + username + '&password=' + password + '&email=' + email + '&steam=' + steam + '&riot=' + riot + '&battlenet=' + battlenet + '&discord=' + discord)
+            .then((response) => {
             var data = response.json().then((data) => {
-                if (data.status == "SUCCESS") {
+                if (data.username !== null) {
                     console.log( '[Auth] Register Successful ',data)
-                    localStorage.setItem('user',JSON.stringify(data.payload))
-                    user = data.payload
-                } else if (data.status == "FAILURE") {
-                    console.log('[Auth] Auth failed,error ' + data.status)
+                    localStorage.setItem('user',JSON.stringify(data))
+                    user = data
+                } else {
+                    console.log('[Auth] Auth failed,error ' + data)
                 }
-                callback(data)
+                // callback(data)
             })
         })
     },

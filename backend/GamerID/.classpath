@@ -27,10 +27,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/mysql-connector-java-5.1.43/mysql-connector-java-5.1.43-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-tomcat-9.0.0.M26/lib/servlet-api.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files/apache-maven-3.5.0/lib/maven-core-3.5.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Users/Filipe Borba/Desktop/Coisas/apache-tomcat-9.0.1/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Filipe Borba/Desktop/Coisas/mysql-connector-java-5.1.43/mysql-connector-java-5.1.43-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/apache-maven-3.5.0/lib/maven-core-3.5.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

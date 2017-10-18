@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.gamerid.bean.User;
 import com.gamerid.repository.UserRepository;
 import com.gamerid.service.GamerTagService;
 import com.gamerid.service.UserService;
 
+@RestController
 @Controller
 @RequestMapping(path="/api")
 public class UserController {
@@ -29,8 +33,8 @@ public class UserController {
 	private GamerTagService gamertagService;
 
 	//@RequestParam(value = "discord", required=false) String discord) -> Caso o Parâmetro não seja obrigatorio
-	@RequestMapping(value = "/addUser", method = RequestMethod.GET)
-	public @ResponseBody String addUser (@RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String steam, @RequestParam String riot, @RequestParam String battlenet, @RequestParam String discord){
+	@RequestMapping(value = "/addUser", method = {RequestMethod.GET, RequestMethod.POST})
+	public ResponseEntity<User> addUser (@RequestParam String username, @RequestParam String password, @RequestParam String email, @RequestParam String steam, @RequestParam String riot, @RequestParam String battlenet, @RequestParam String discord){
 		User userExists = userService.findByUsername(username);
 		User emailExists = userService.findByEmail(email);
 		User user = new User();
@@ -38,12 +42,12 @@ public class UserController {
 		
 		if (userExists != null) {
 			System.out.println(username + " já é cadastrado");
-			return username + " já é cadastrado";
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}else{user.setUsername(username);}
 		
 		if (emailExists != null) {
 			System.out.println(email + " já é cadastrado");
-			return email + " já é cadastrado";
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}else{user.setEmail(email);}
 		
 		if(steam.equals("null")){
@@ -54,7 +58,7 @@ public class UserController {
 			User steamExists = gamertagService.findBySteam(steam);
 			if (steamExists != null){
 				System.out.println(steam+" GamerTag já é cadastrada");
-				return steam+ "GamerTag já é cadastrada";
+				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 			}else{user.setSteam(steam);}
 		}
 		
@@ -66,7 +70,7 @@ public class UserController {
 			User riotExists = gamertagService.findByRiot(riot);
 			if (riotExists != null){
 				System.out.println(riot+" GamerTag já é cadastrada");
-				return riot+ "GamerTag já é cadastrada";
+				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 			}else{user.setRiot(riot);}
 		}
 		
@@ -78,7 +82,7 @@ public class UserController {
 			User battlenetExists = gamertagService.findByBattlenet(battlenet);
 			if (battlenetExists != null){
 				System.out.println(battlenet+" GamerTag já é cadastrada");
-				return battlenet+ "GamerTag já é cadastrada";
+				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 			}else{user.setBattlenet(battlenet);}
 		}
 		
@@ -90,14 +94,14 @@ public class UserController {
 			User discordExists = gamertagService.findByDiscord(discord);
 			if (discordExists != null){
 				System.out.println(discord+" GamerTag já é cadastrada");
-				return discord+ "GamerTag já é cadastrada";
+				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 			}else{user.setDiscord(discord);}
 		}
 			
 		userService.saveUser(user);
 		System.out.println("User created:");
 		System.out.println(user);
-		return "Usuário criado";
+		return new ResponseEntity<User>(user, HttpStatus.OK);
 		
 		// http://localhost:8080/api/addUser?username={}&password={}&email={}&steam={}&riot={}&battlenet={}&discord={}
 		// Cria um usuário
@@ -105,18 +109,24 @@ public class UserController {
 		// Check http://www.eso.org/~ndelmott/url_encode.html for other representations
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public @ResponseBody String login (@RequestParam String username, @RequestParam String password){
-		System.out.println("Autenticando username: " + username + " | password: " + password);
-		User userExists = userService.findByUsername(username);
-		
-		if (Objects.equals(userExists.getPassword(), password)){
-			System.out.println("Senha verificada");
-		} else{
-			System.out.println("Senha errada");
-		}
-		return "Login feito";
-	}
+	@RequestMapping(value = "/login", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<User> login(@RequestParam String username, @RequestParam String password){
+        System.out.println("Autenticando username: " + username + " | password: " + password);
+        User userExists = userService.findByUsername(username);
+        if (userExists != null) {
+            System.out.println(username + " é cadastrado");
+            if (Objects.equals(userExists.getPassword(), password)){
+                System.out.println("Senha verificada");
+                return new ResponseEntity<User>(userExists, HttpStatus.OK);
+            } else{
+                System.out.println("Senha errada");
+                return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+            }
+        } else {
+            System.out.println(username + " não é cadastrado");
+            return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+        } 
+    }
 	
 	@RequestMapping(value = "/allUsers", method = RequestMethod.GET)
 	public @ResponseBody Iterable<User> getAllUsers() {
