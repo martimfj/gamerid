@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
-import Avatar from 'material-ui/Avatar'
-import Popover from 'material-ui/Popover'
-import Menu from 'material-ui/Menu'
-import MenuItem from 'material-ui/MenuItem'
-import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
-import Drawer from 'material-ui/Drawer';
-import FontIcon from 'material-ui/FontIcon';
 import logo from './icons/logo.png';
-import auth from './helpers/auth.js'
-import leagueprofile from './helpers/leagueoflegends.js'
-import NotesContainer from './NotesContainer'
-
-import Navbar from './Navbar'
-import LeagueOfLegends from './LeagueOfLegends.jsx'
-import Steam from './Steam.jsx'
-import Battlenet from './Battlenet.jsx'
+import auth from './helpers/auth.js';
+import { Grid, Col, Row} from 'react-bootstrap';
+import Navbar from './Navbar';
+import LeagueOfLegends from './LeagueOfLegends.jsx';
+import Steam from './Steam.jsx';
+import Battlenet from './Battlenet.jsx';
+import LeftDrawer from './drawer';
 
 // import 'materialize-css/dist/css/materialize.css'
 
@@ -27,9 +18,10 @@ class Home extends Component {
         this.state = {
             user : auth.getUser(),
             drawer : true,
-            filter : ''
+            filter : 'all',
+            wichGame: 'battlenet',
         }
-            
+        this.returnGameComponent = this.returnGameComponent.bind(this);
     }
 
     componentWillMount() {
@@ -43,6 +35,21 @@ class Home extends Component {
 
     }
 
+    returnGameComponent(){
+      if (this.state.wichGame === 'lol') {
+        return (
+          <LeagueOfLegends />
+        );
+      }
+      else if (this.state.wichGame === 'steam') {
+        return (
+          <Steam />
+        );
+      } else if (this.state.wichGame === 'battlenet') {
+        return ( <Battlenet />);
+      }
+    }
+
     toggleDrawer = () => {
         this.setState({drawer : !this.state.drawer})
     }
@@ -52,40 +59,44 @@ class Home extends Component {
     }
 
     render() {
-        if (this.state.filter === 'leagueoflegends') {
-            return (
-                <div>
+        return (
+            <div style={{
+              backgroundColor: '#fff'
+            }}>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css"/>
                 <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
-                <LeagueOfLegends />
-                </div>
-            );
-        }
-
-        else if (this.state.filter === 'steam') {
-            return (
-                <div>
-                <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
-                <Steam />
-                </div>
-            );
-        }
-
-        else if (this.state.filter === 'battlenet') {
-            return (
-                <div>
-                <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
-                <Battlenet />
-                </div>
-            );
-        }
-
-        else if (this.state.filter === '') {
-            return (
-                <div>
-                <Navbar toggleDrawer={this.toggleDrawer} setFilter={this.setFilter}/>
-                </div>
-            );
-        }
+                <Grid >
+                  <Row>
+                      { this.state.drawer ?
+                        <Col md={3}>
+                        <LeftDrawer
+                          selectedOptionCallback = {
+                            (game) => {
+                              this.setState({wichGame:game});
+                            }
+                          }
+                        />
+                         </Col>
+                        :
+                        ''
+                      }
+                    <Col md={this.state.drawer ? 9 : 12}>
+                      <div 
+                      id='game-container'
+                      style={{
+                        padding: '2%',
+                        margin: '0',
+                        textAlign: 'center'
+                      }}>
+                         {this.returnGameComponent()}
+                      </div>
+                    </Col>
+                  </Row>
+                </Grid>
+                {/* <NotesContainer margin={this.state.drawer} filter={this.state.filter}/> */}
+            </div>
+        );
     }
 }
 

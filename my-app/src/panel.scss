@@ -1,0 +1,47 @@
+.category-panel {
+  background-color: #EFF0F1;
+  .category-header {
+    position: relative;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .icon-config {
+    font-family: 'FontAwesome';
+    font-size: 10px;
+  }
+  .panel-heading {
+    a {
+      // display: inline-block;
+      text-decoration: none;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.76em/4 0.76em;
+
+      .button-toolbar-container {
+        padding: 0;
+        .button-toolbar {
+          padding: 0.76em/4;
+          margin: 0 0.76em/2;
+          background-color: transparent;
+          border: none;
+          width: 2em;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  .panel-body {
+    padding: 0.2em 2em;
+  }
+  text-align: left;
+}

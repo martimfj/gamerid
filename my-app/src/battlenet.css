@@ -1,0 +1,11 @@
+.character-info-line {
+    display: flex;
+    flex: row;
+    justify-content: space-between;
+}
+
+.character-attributes-line {
+    display: flex;
+    flex: row;
+    justify-content: space-around;
+}

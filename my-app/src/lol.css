@@ -1,0 +1,42 @@
+.flex-column-centered {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.flex-row-around {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.flex-row-between {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.flex-row-center {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.sub-title {
+    text-align: left;
+    margin-bottom: 5%;
+    padding-bottom: 15px;
+    border-bottom: 1px solid gray;
+}
+
+.label-title {
+    font-size: 19px;
+    font-weight: bold;
+    padding-bottom: 5%;
+}
+
+.character-attributes-line {
+    display: flex;
+    flex: row;
+    justify-content: space-around;
+}
