@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField'
 import CircularProgress from 'material-ui/CircularProgress';
-import Divider from 'material-ui/Divider'
-import battlenet from './helpers/battlenet.js'
-import _ from 'lodash'
+import Divider from 'material-ui/Divider';
+import battlenet from './helpers/battlenet.js';
+import './battlenet.css';
+import _ from 'lodash';
 
 class Battlenet extends Component {
     constructor(props) {
@@ -47,7 +48,7 @@ class Battlenet extends Component {
                 }
             }
         };
-        
+
         /*this.user = auth.getUser()*/
 
     }
@@ -67,7 +68,7 @@ class Battlenet extends Component {
 
     componentWillReceiveProps() {
     }
-    
+
     render() {
         var mainHand = '';
         var offHand = '';
@@ -99,47 +100,132 @@ class Battlenet extends Component {
             var head = 'http://media.blizzard.com/d3/icons/items/large/'        + this.state.battlenetprofile.hero.items.head        + '.png';
         }
         return (
-            <div style={ this.props.margin ? { marginLeft:275,marginRight:25 } : { marginLeft : 0 }}>
-            <div className='row centered'>
-                <div className='note-input-wrapper' style={{backgroundColor : '#ffffff' }}>
+            <div>
+            <div>
+                <h1 style={{paddingBottom:'5%'}}> 
+                    <strong> DIABLO III </strong> 
+                 </h1>
+                <div>
                     <div>
-                        <img src='https://us.battle.net/d3/static/images/profile/hero/paperdoll/demon-hunter-male.jpg' />
-                        <p>BattleTag: {this.state.battlenetprofile.battleTag}</p>
-                        <p>Hero Name: {this.state.battlenetprofile.hero.name}</p>
-                        <p>Class: {this.state.battlenetprofile.hero.class}</p>
-                        <p>Hero Level: {this.state.battlenetprofile.hero.level}</p>
-                        <p>Paragon Level: {this.state.battlenetprofile.hero.paragonLevel}</p>
-                        <img src={mainHand} />
-                        <img src={offHand} />
-                        <img src={waist} />
-                        <img src={rightFinger} />
-                        <img src={leftFinger} />
-                        <img src={neck} />
-                        <img src={feet} />
-                        <img src={hands} />
-                        <img src={shoulders} />
-                        <img src={torso} />
-                        <img src={legs} />
-                        <img src={bracers} />
-                        <img src={head} />
-                        <ul>
-                            <li>Attributes</li>
-                            <Divider/>
-                            <li>Strength     {this.state.battlenetprofile.hero.stats.strength}</li>
-                            <li>Dexterity    {this.state.battlenetprofile.hero.stats.dexterity}</li>
-                            <li>Intelligence {this.state.battlenetprofile.hero.stats.intelligence}</li>
-                            <li>Vitality     {this.state.battlenetprofile.hero.stats.vitality}</li>
-                            <Divider/>
-                            <li>Damage       {this.state.battlenetprofile.hero.stats.damage}</li>
-                            <li>Toughness    {this.state.battlenetprofile.hero.stats.toughness}</li>
-                            <li>Recovery     {this.state.battlenetprofile.hero.stats.healing}</li>
-                            <Divider/>
-                            <li>Life         {this.state.battlenetprofile.hero.stats.life}</li>
-                            <li>Hatred/Discipline {this.state.battlenetprofile.hero.stats.hatred}/{this.state.battlenetprofile.hero.stats.discipline}</li>
-                        </ul>
+                            <div style={{
+                                display: 'flex', 
+                                flexDirection: 'row',
+                            }}>
+                                <div style={{ maxWidth: '70%', position: 'relative' }}>
+                                    <img style={{ maxWidth: '95%' }} src='https://us.battle.net/d3/static/images/profile/hero/paperdoll/demon-hunter-male.jpg' />
+                                    <div style={{position: 'absolute', bottom: '8%', right: '42%'}}>
+                                        <img src={mainHand} style={{maxWidth:'70%'}} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '8%', right: '21%' }}>
+                                        <img src={offHand} style={{maxWidth:'70%'}}/>
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '33%', right: '21%' }}>
+                                        <img src={leftFinger} style={{ maxWidth: '50%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '33%', right: '42%' }}>
+                                        <img src={rightFinger} style={{ maxWidth: '50%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '8%', right: '31%' }}>
+                                        <img src={feet} style={{ maxWidth: '60%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '22%', right: '32%' }}>
+                                        <img src={legs} style={{ maxWidth: '55%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '40%', right: '42%' }}>
+                                        <img src={hands} style={{ maxWidth: '45%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '40%', right: '21%' }}>
+                                        <img src={bracers} style={{ maxWidth: '50%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '42%', right: '30%' }}>
+                                        <img src={torso} style={{ maxWidth: '55%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '55%', right: '40%' }}>
+                                        <img src={shoulders} style={{ maxWidth: '55%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '60%', right: '24%' }}>
+                                        <img src={neck} style={{ maxWidth: '55%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '60%', right: '32%' }}>
+                                        <img src={head} style={{ maxWidth: '55%' }} />
+                                    </div>
+                                    <div style={{ position: 'absolute', bottom: '38%', right: '32%' }}>
+                                        <img src={waist} style={{ maxWidth: '55%' }} />
+                                    </div>
+                                </div>
+                            <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-around',
+                                    width: '30%',
+                                    paddingLeft: '2%'
+                                }}>
+                                    <div className='character-info-line'>
+                                        <p> <strong> BattleTag </strong> </p>
+                                        <p>{this.state.battlenetprofile.battleTag} </p>
+                                    </div>
+                                    <div className='character-info-line'>
+                                        <p> <strong>Hero Name </strong></p>
+                                        <p>{this.state.battlenetprofile.hero.name} </p>
+                                    </div>
+                                    <div className='character-info-line'>
+                                            <p> <strong>Class </strong></p>
+                                        <p>{this.state.battlenetprofile.hero.class} </p>
+                                    </div>
+                                    <div className='character-info-line'>
+                                                <p> <strong> Hero Level</strong></p>
+                                        <p>{this.state.battlenetprofile.hero.level} </p>
+                                    </div>
+                                    <div className='character-info-line'>
+                                        <p> <strong>Paragon Level</strong></p>
+                                        <p>{this.state.battlenetprofile.hero.paragonLevel} </p>
+                                    </div>
+                            </div>
+                        </div>
+                        <div style = {{paddingTop:'3%'}}>
+                            <h2> Attributes </h2>
+                            <div className = 'attributes-container' style={{ paddingTop: '3%' }}>
+                                <div style = {{backgroundColor: '#d3d3d3'}} className='character-attributes-line'>
+                                        <p> <strong>Strength  </strong></p>
+                                        <p>{this.state.battlenetprofile.hero.stats.strength} </p>
+                                </div>
+                                <div className='character-attributes-line'>
+                                        <p> <strong>Dexterity  </strong></p>
+                                        <p>{this.state.battlenetprofile.hero.stats.dexterity} </p>
+                                </div>
+                                <div style={{ backgroundColor: '#d3d3d3' }} className='character-attributes-line'>
+                                        <p> <strong>Intelligence  </strong></p>
+                                        <p>{this.state.battlenetprofile.hero.stats.intelligence} </p>
+                                </div>
+                                <div className='character-attributes-line'>
+                                        <p> <strong>Vitality </strong></p>
+                                        <p>{this.state.battlenetprofile.hero.stats.vitality} </p>
+                                </div>
+                                <div style={{ backgroundColor: '#d3d3d3' }} className='character-attributes-line'>
+                                        <p> <strong>Damage  </strong></p>
+                                        <p> {this.state.battlenetprofile.hero.stats.damage}</p>
+                                </div>
+                                <div className='character-attributes-line'>
+                                        <p> <strong>Toughness   </strong></p>
+                                        <p> {this.state.battlenetprofile.hero.stats.toughness}</p>
+                                </div>
+                                <div style={{ backgroundColor: '#d3d3d3' }} className='character-attributes-line'>
+                                        <p> <strong>Recovery   </strong></p>
+                                        <p> {this.state.battlenetprofile.hero.stats.healing}</p>
+                                </div>
+                                <div className='character-attributes-line'>
+                                        <p> <strong>Life    </strong></p>
+                                        <p> {this.state.battlenetprofile.hero.stats.life}</p>
+                                </div>
+                                <div style={{ backgroundColor: '#d3d3d3' }} className='character-attributes-line'>
+                                        <p> <strong>Hatred/Discipline </strong></p>
+                                        <p> {this.state.battlenetprofile.hero.stats.hatred}/{this.state.battlenetprofile.hero.stats.discipline}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className='row center canvas-container'>
+                    <div >
                         { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
                         { _.values(this.state.images).reverse() }
                         <img className='note-input-img' src={this.state.imgSrc}/>

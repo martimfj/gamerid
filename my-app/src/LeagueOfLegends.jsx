@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import TextField from 'material-ui/TextField'
+import TextField from 'material-ui/TextField';
 import CircularProgress from 'material-ui/CircularProgress';
-import leagueoflegends from './helpers/leagueoflegends.js'
-import _ from 'lodash'
+import leagueoflegends from './helpers/leagueoflegends.js';
+import _ from 'lodash';
+import './lol.css';
 
 import {Pie} from 'react-chartjs-2';
 
@@ -32,13 +33,19 @@ class LeagueOfLegends extends Component {
                         points: '',
                         championId: '',
                         championName: ''}
-                    }
+                    },
+                // thirdMasteryChampion: {
+                //     level: '',
+                //     points: '',
+                //     championId: '',
+                //     championName: ''
+                // },
+            }
             }
         };
-        
+
         /*this.user = auth.getUser()*/
 
-    }
 
     componentWillMount() {
         leagueoflegends.subscribe((lolprofile) => {
@@ -56,8 +63,8 @@ class LeagueOfLegends extends Component {
     componentWillReceiveProps() {
     }
 
-      
-    
+
+
 
     render() {
         let data = {
@@ -74,16 +81,23 @@ class LeagueOfLegends extends Component {
         }
 
         var firstMasteryChampionImage = '';
-        
+
         if (this.state.lolprofile.mastery.firstMasteryChampion.championName !== '') {
             var firstMasteryChampionImage = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' + this.state.lolprofile.mastery.firstMasteryChampion.championName + '.png';
         }
 
         var secondMasteryChampionImage = '';
-        
+
         if (this.state.lolprofile.mastery.secondMasteryChampion.championName !== '') {
             var secondMasteryChampionImage = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' + this.state.lolprofile.mastery.secondMasteryChampion.championName + '.png';
         }
+
+
+        // var thirdMasteryChampionImage = '';
+
+        // if (this.state.lolprofile.mastery.thirdMasteryChampion.championName !== '') {
+        //     var thirdMasteryChampionImage = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' + this.state.lolprofile.mastery.thirdMasteryChampion.championName + '.png';
+        // }
 
         var tierImage = '';
 
@@ -92,34 +106,76 @@ class LeagueOfLegends extends Component {
         }
 
         return (
-            <div style={ this.props.margin ? { marginLeft:275,marginRight:25 } : { marginLeft : 0 }}>
-            <div className='row centered'>
-                <div className='note-input-wrapper' style={{backgroundColor : '#ffffff' }}>
+            <div >
+            <div >
+                <div >
+                        <div>
+                            <h1 style={{ paddingBottom: '5%' }}>
+                                <strong> League of Legends </strong>
+                            </h1>
+                        </div>
                     <div>
-                        <img src={lastPlayedChampionImage} />
-                        <p>{this.state.lolprofile.summonerName}</p>
-                        <p>{this.state.lolprofile.summonerLevel}</p>
-                        <p>{this.state.lolprofile.tier} {this.state.lolprofile.rank}</p>
-                        <img src={tierImage} />
-                        <Pie data={data}/>
-                        <img src={firstMasteryChampionImage} />
-                        <p>{this.state.lolprofile.mastery.firstMasteryChampion.level}</p>
-                        <p>{this.state.lolprofile.mastery.firstMasteryChampion.points}</p>
-                        <p>{this.state.lolprofile.mastery.firstMasteryChampion.championName}</p>
-                        <img src={secondMasteryChampionImage} />
-                        <p>{this.state.lolprofile.mastery.secondMasteryChampion.level}</p>
-                        <p>{this.state.lolprofile.mastery.secondMasteryChampion.points}</p>
-                        <p>{this.state.lolprofile.mastery.firstMasteryChampion.championName}</p>
+                        <h2 className='sub-title'> Basic Informations </h2>
+                        <div className='flex-row-between'>
+                            <div className='flex-column-centered'>
+                                    <span className='label-title'> Latest Champion Played </span>
+                                    <img style={{maxWidth: '70%'}} src={lastPlayedChampionImage} />
+                            </div>
+                            <div className='flex-column-centered'>
+                              <span className='label-title'> Summoner Name </span>
+                              <p>{this.state.lolprofile.summonerName}</p>
+                            </div>
+                            <div className='flex-column-centered'>
+                                    <span className='label-title'> Level </span>
+                                <p>{this.state.lolprofile.summonerLevel}</p>
+                            </div>
+                        </div>
+                        <h2 className='sub-title'> Rank </h2>
+                        <div className='flex-row-around'>
+                            <div className='flex-column-centered'>
+                                <img src={tierImage} />
+                            </div>
+                            <div className='flex-column-centered'>
+                                <h3><strong>{this.state.lolprofile.tier} {this.state.lolprofile.rank}</strong></h3>
+                            </div>
+                        </div>
+                        <h2 className='sub-title'> Matches </h2>
+                        <div className='flex-row-center'>
+                          <div>
+                             <Pie data={data} />
+                          </div>
+                        </div>
+                        <h2 className='sub-title'> Champions Mastery </h2>
+                        <div className='flex-row-around'>
+                            <div className='flex-column-centered'>
+                                <p>{this.state.lolprofile.mastery.secondMasteryChampion.championName}</p>
+                                <img src={secondMasteryChampionImage} />
+                                <div className='flex-column-centered'>
+                                    <p> <strong>Level</strong> {this.state.lolprofile.mastery.secondMasteryChampion.level}</p>
+                                    <p>{this.state.lolprofile.mastery.secondMasteryChampion.points} <strong>points</strong></p>
+                                </div>
+                            </div>
+                            <div className='flex-column-centered'>
+                                    <p>{this.state.lolprofile.mastery.firstMasteryChampion.championName}</p>
+                                    <img src={firstMasteryChampionImage} />
+                                    <div className='flex-column-centered'>
+                                        <p> <strong>Level</strong> {this.state.lolprofile.mastery.firstMasteryChampion.level}</p>
+                                        <p>{this.state.lolprofile.mastery.firstMasteryChampion.points} <strong>points</strong></p>
+                                    </div>
+                            </div>
+                            {/* <div className='flex-column-centered'>
+                                <p>{this.state.lolprofile.mastery.thirdMasteryChampion.championName}</p>
+                                <img src={thirdMasteryChampionImage} />
+                                <div className='flex-column-centered'>
+                                    <p> <strong>Level</strong> {this.state.lolprofile.mastery.thirdMasteryChampion.level}</p>
+                                    <p>{this.state.lolprofile.mastery.thirdMasteryChampion.points} <strong>points</strong></p>
+                                </div>
+                            </div> */}
+                        </div>
                     </div>
-
-                    <div className='row center canvas-container'>
-                        { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
-                        { _.values(this.state.images).reverse() }
-                        <img className='note-input-img' src={this.state.imgSrc}/>
-                    </div>                    
-                </div>
+                  </div>
+              </div>
             </div>
-        </div>
         );
     }
 }

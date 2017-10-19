@@ -26,7 +26,7 @@ var lolprofile = {
                             championId: '',
                             championName: ''}
                         }
-                }   
+                }
 
 var counter = 0
 
@@ -51,7 +51,7 @@ export default window.leagueoflegends = {
                 this.getRank(lolprofile.summonerId)
                 this.getChampionMasteries(lolprofile.summonerId)
                 this.setData()
-            })  
+            })
         },
 
     getRank(summonerId) {
@@ -118,6 +118,6 @@ export default window.leagueoflegends = {
 
 
     getLolProfile(){
-        return lolprofile    
+        return lolprofile
     }
 }
