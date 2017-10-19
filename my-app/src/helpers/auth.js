@@ -1,6 +1,4 @@
 // This file handles data manipulation
-
-import store from './store'
 import {EventEmitter} from 'events'
 
 const emitter = new EventEmitter();
@@ -16,14 +14,14 @@ var user = {
     riot : null,
     steam : null,
     battlenet : null,
-    discord : null
+    discord : null,
+    avatar : null
 }
 
 export default window.auth = {
     login : (username,password,callback) => {
         console.log('Logging in with',username,password)
         var url = baseUrl + 'login?username=' + username + '&password=' + password;
-        console.log(password)
         fetch(url).then((response) => {
             var data = response.json().then((data) => {
                 if (data.username !== null) {
@@ -49,7 +47,15 @@ export default window.auth = {
         }
     },
 
+    getAvatar : (username) => {
+        var url = baseUrl + 'avatar?username=' + username;
+        fetch(url).then((response) => {
+            user.avatar = response
+        })
+    },
+
     getUser : () => {
+        // console.log(user)
         return user
     },
 
@@ -66,6 +72,7 @@ export default window.auth = {
                     console.log('[Auth] Auth failed,error ' + data)
                 }
                 // callback(data)
+                window.location.reload()
             })
         })
     },

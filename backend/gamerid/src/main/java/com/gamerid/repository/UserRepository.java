@@ -38,6 +38,11 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	@Query("update User u set u.username = ?1 where u.email = ?2")
 	void setUserUsernameByEmail(String username, String email);
 	
+	@Modifying
+	@Transactional
+	@Query("update User u set u.avatar = ?1 where u.username = ?2")
+	void setUserAvatarByUsername(String avatar, String username);
+	
 	// -------------------------- Gamertag -------------------------- //
 	
 	@Transactional

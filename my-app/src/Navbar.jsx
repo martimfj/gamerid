@@ -30,7 +30,7 @@ class Navbar extends Component {
             anchorEl : null,
             drawer : null,
             show : false,
-            value: null,
+            value: '',
         }
         {/* user : auth.getUser(), */}
         this.handleSearchChange = this.handleSearchChange.bind(this);
@@ -103,12 +103,11 @@ class Navbar extends Component {
                         <ul className="right" style={{marginRight:'40px'}}>
                             <li>
                                 <TextField
-                                        floatingLabelStyle = {{
-                                        backgroundColor: '#fff'
-                                    }}
+                                    floatingLabelStyle = {{backgroundColor: '#fff'}}
                                     id="text-field-controlled"
                                     value={this.state.value}
                                     onChange={this.handleSearchChange}
+                                    hintText='Procure um GamerID...'
                                 />
                             </li>
                         </ul>

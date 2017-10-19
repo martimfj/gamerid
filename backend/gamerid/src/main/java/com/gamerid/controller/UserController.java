@@ -39,6 +39,7 @@ public class UserController {
 		User emailExists = userService.findByEmail(email);
 		User user = new User();
 		user.setPassword(password);
+		user.setAvatar(null);
 		
 		if (userExists != null) {
 			System.out.println(username + " já é cadastrado");
@@ -126,6 +127,29 @@ public class UserController {
             System.out.println(username + " não é cadastrado");
             return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
         } 
+    }
+	
+	@RequestMapping(value = "/avatar", method = {RequestMethod.GET, RequestMethod.POST})
+    public ResponseEntity<String> avatar(@RequestParam String username){
+        System.out.println("username: " + username);
+        User userExists = userService.findByUsername(username);
+        String avatar = userExists.getAvatar();
+        userService.setUserAvatarByUsername(avatar, username);
+        return new ResponseEntity<String>(avatar, HttpStatus.OK);
+    }
+	
+	@RequestMapping(value = "/setAvatar", method = {RequestMethod.GET, RequestMethod.POST})
+    public String avatar(@RequestParam String username, String avatar){
+        System.out.println("username: " + username);
+        User userExists = userService.findByUsername(username);
+        if (userExists != null) {
+        	userService.setUserAvatarByUsername(avatar, username);
+        	return "Novo avatar setado";
+        } else {
+        	return "Usuario nao encontrado";
+        }
+        
+       
     }
 	
 	@RequestMapping(value = "/allUsers", method = RequestMethod.GET)

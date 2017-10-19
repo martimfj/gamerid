@@ -19,7 +19,7 @@ class Home extends Component {
             user : auth.getUser(),
             drawer : true,
             filter : 'all',
-            wichGame: 'battlenet',
+            whichGame: '',
         }
         this.returnGameComponent = this.returnGameComponent.bind(this);
     }
@@ -36,16 +36,16 @@ class Home extends Component {
     }
 
     returnGameComponent(){
-      if (this.state.wichGame === 'lol') {
+      if (this.state.whichGame === 'lol') {
         return (
           <LeagueOfLegends />
         );
       }
-      else if (this.state.wichGame === 'steam') {
+      else if (this.state.whichGame === 'steam') {
         return (
           <Steam />
         );
-      } else if (this.state.wichGame === 'battlenet') {
+      } else if (this.state.whichGame === 'battlenet') {
         return ( <Battlenet />);
       }
     }
@@ -73,7 +73,7 @@ class Home extends Component {
                         <LeftDrawer
                           selectedOptionCallback = {
                             (game) => {
-                              this.setState({wichGame:game});
+                              this.setState({whichGame:game});
                             }
                           }
                         />
@@ -94,7 +94,6 @@ class Home extends Component {
                     </Col>
                   </Row>
                 </Grid>
-                {/* <NotesContainer margin={this.state.drawer} filter={this.state.filter}/> */}
             </div>
         );
     }

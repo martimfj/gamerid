@@ -71,9 +71,8 @@ class App extends Component {
   }
 
   handleRegister = () => {
-    auth.register(this.state.textFields.email,this.state.textFields.userName,this.state.textFields.password,this.state.textFields.email,this.state.textFields.userName,this.state.textFields.password,
-      this.state.textFields.steam, this.state.textFields.riot, this.state.textFields.battlenet,
-      this.state.textFields.discord, (result) => {
+    auth.register(this.state.textFields.email,this.state.textFields.userName,this.state.textFields.password,
+      this.state.textFields.steam, this.state.textFields.riot, this.state.textFields.battlenet, this.state.textFields.discord, (result) => {
       if (result.status == "SUCCESS"){
         this.setState({ open:false, auth: auth.getUser() })
       } else if (result.status == "FAILURE"){

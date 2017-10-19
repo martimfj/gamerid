@@ -46,5 +46,9 @@ public class UserService {
 	
 	public void setUserUsernameByEmail(String username, String email) {
 		userRepository.setUserUsernameByEmail(username, email);
-	}	
+	}
+	
+	public void setUserAvatarByUsername(String avatar, String username) {
+		userRepository.setUserAvatarByUsername(avatar, username);
+	}
 }

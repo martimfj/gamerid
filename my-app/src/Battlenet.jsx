@@ -224,12 +224,6 @@ class Battlenet extends Component {
                             </div>
                         </div>
                     </div>
-
-                    <div >
-                        { this.state.imageIsLoading ? <CircularProgress style={{ margin : 20 }}/> : null }
-                        { _.values(this.state.images).reverse() }
-                        <img className='note-input-img' src={this.state.imgSrc}/>
-                    </div>
                 </div>
             </div>
         </div>

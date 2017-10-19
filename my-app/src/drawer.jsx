@@ -9,6 +9,7 @@ import Divider from 'material-ui/Divider'
 import Drawer from 'material-ui/Drawer'
 import FontIcon from 'material-ui/FontIcon'
 import IconButton from 'material-ui/IconButton'
+import FileBase64 from 'react-file-base64';
 
 import logo from './icons/logo.png'
 import steam from './icons/steam.png'
@@ -25,20 +26,20 @@ class LeftDrawer extends Component {
         this.mql = window.matchMedia('(min-width: 480px)')
         this.mediaQueryChanged = this.mediaQueryChanged.bind(this)
         this.state = {
-            user : auth.getUser(),
+            user : JSON.parse(auth.getUser()),
             open : false,
             anchorEl : null,
             drawer : null,
-            show : false
+            show : false,
+            files : ''
         }
+        this.selectFile = false;
     }
 
     componentWillMount() {
         this.mql.addListener(this.mediaQueryChanged)
         this.setState({mql:this.mql, docked : this.mql.matches})
     }
-
-
 
     mediaQueryChanged() {
         this.setState({
@@ -60,8 +61,19 @@ class LeftDrawer extends Component {
         })
     }
 
+    getFiles(files){
+        this.setState({ files: files, open : false})
+        var url = 'http://localhost:8080/api/avatar?username=' + this.state.user.username + '&avatar=' + this.state.files.base64;
+        fetch(url)
+  }
+
 
     render() {
+        var profileImage = this.state.user.avatar;
+        if (this.state.files !== '') {
+            var profileImage = this.state.files.base64;
+        }
+
         return (
             <div
             >
@@ -77,7 +89,7 @@ class LeftDrawer extends Component {
                     <FlatButton style={{height:'auto',lineHeight:'none'}}
                         onTouchTap={this.handleTouchTap}
                         hoverColor={ 'rgba(130,130,130,0.1)' }>
-                        <Avatar src='http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/588.png' size={70} />
+                        <Avatar src={profileImage} size={70} />
                         <Popover
                             open={this.state.open}
                             anchorEl={this.state.anchorEl}
@@ -86,7 +98,8 @@ class LeftDrawer extends Component {
                             onRequestClose={this.handleRequestClose}
                         >
                             <Menu>
-                                <MenuItem primaryText="Selecionar Imagem de Perfil" />
+                                <MenuItem disabled primaryText="Selecionar Imagem de Perfil" />
+                                <FileBase64 multiple={ false } onDone={ this.getFiles.bind(this) } />
                             </Menu>
                         </Popover>
                     </FlatButton>

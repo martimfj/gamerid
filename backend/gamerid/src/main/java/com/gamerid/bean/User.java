@@ -15,10 +15,11 @@ public class User {
 	private String riot;
 	private String battlenet;
 	private String discord;
+	private String avatar;
 	
 	public User() {}
 	
-	public User(String username, String password, String email, String steam, String riot, String battlenet, String discord){
+	public User(String username, String password, String email, String steam, String riot, String battlenet, String discord, String avatar){
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -26,6 +27,7 @@ public class User {
         this.riot = riot;
         this.battlenet = battlenet;
         this.discord = discord;
+        this.avatar = avatar;
 	}
 	
 	public Long getId() {  
@@ -75,5 +77,11 @@ public class User {
 	}
 	public void setDiscord(String discord) {
 		this.discord = discord;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 }

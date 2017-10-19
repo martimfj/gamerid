@@ -1,4 +1,5 @@
 import {EventEmitter} from 'events'
+import auth from './auth.js';
 
 const emitter = new EventEmitter();
 emitter.setMaxListeners(20)
@@ -20,6 +21,9 @@ var steamprofile = {
 export default window.steam = {
     subscribe(callback){
         emitter.addListener('steam_update', callback)
+        let user = auth.getUser()
+        user = JSON.parse(user)
+        steamprofile.steamId = user.steam
         this.getSteamInfo()
     },
 
@@ -28,7 +32,7 @@ export default window.steam = {
     },
 
     getSteamInfo() {
-            fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamids=76561197996048272')
+            fetch('http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamids=' + steamprofile.steamId)
                 .then(steamrequest => steamrequest.json())
                 .then(steamrequest => {
                     steamprofile.personName    = steamrequest.response.players[0].personaname
@@ -41,7 +45,7 @@ export default window.steam = {
                 
         },
     getCSGOInfo() {
-        fetch('http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamid=76561197996048272')
+        fetch('http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=730&key=8DD3D47C1DFB6EA97EA7F6665C4FBA20&steamid=' + steamprofile.steamId)
         .then(steamrequest => steamrequest.json())
         .then(steamrequest => {
             steamprofile.csgo.kills = steamrequest.playerstats.stats[0].value

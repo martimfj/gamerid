@@ -1,10 +1,11 @@
 import {EventEmitter} from 'events'
+import auth from './auth.js';
 
 const emitter = new EventEmitter();
 emitter.setMaxListeners(20)
 
 var lolprofile = {
-                    summonerName: 'coltshot',
+                    summonerName: '',
                     accountId: '',
                     summonerId: '',
                     summonerLevel: '',
@@ -33,6 +34,9 @@ var counter = 0
 export default window.leagueoflegends = {
     subscribe(callback){
         emitter.addListener('lolprofile_update', callback)
+        let user = auth.getUser()
+        user = JSON.parse(user)
+        lolprofile.summonerName = user.riot
         this.getSummoner()
     },
 

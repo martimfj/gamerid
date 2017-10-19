@@ -1,4 +1,5 @@
 import {EventEmitter} from 'events'
+import auth from './auth.js';
 
 const emitter = new EventEmitter();
 emitter.setMaxListeners(20)
